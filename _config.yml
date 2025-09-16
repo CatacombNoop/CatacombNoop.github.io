@@ -1,3 +1,17 @@
+title: KTMS Wiki
+description: Wiki page for KTMS
+url: "https://catacombnoop.github.io/" # The base hostname & protocol for your site
+
+# Theme settings
 remote_theme: pages-themes/midnight@v0.2.0
+
+# Plugins
 plugins:
-- jekyll-remote-theme # add this line to the plugins list if you already have one
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-remote-theme # add this line to the plugins list if you already have one
+
+# Other custom settings
+author: John Doe
+email: john.doe@example.com
+
