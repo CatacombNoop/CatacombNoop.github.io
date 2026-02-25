@@ -38,240 +38,6 @@
       <style>body{--line-width:40em;--line-width-adaptive:40em;--file-line-width:40em;--sidebar-width:min(20em, 80vw);--collapse-arrow-size:11px;--tree-vertical-spacing:1.3em;--sidebar-margin:12px}:root{background-color:#202124}.sidebar{height:100%;font-size:14px;z-index:10;min-width:calc(var(--sidebar-width) + var(--divider-width-hover));max-width:calc(var(--sidebar-width) + var(--divider-width-hover));position:relative;overflow:hidden;overflow:clip;transition:min-width ease-in-out,max-width ease-in-out;transition-duration:.2s;contain:size}#left-sidebar{left:0}#right-sidebar{right:0}.sidebar.is-collapsed{min-width:0;max-width:0}.sidebar.floating{position:absolute}.sidebar .leaf-content{height:100%;min-width:calc(var(--sidebar-width) - var(--divider-width-hover));top:0;padding:var(--sidebar-margin);padding-top:4em;line-height:var(--line-height-tight);background-color:var(--background-secondary);transition:background-color,border-right,border-left,box-shadow;transition-duration:var(--color-fade-speed);transition-timing-function:ease-in-out;position:absolute;display:flex;flex-direction:column}.sidebar:not(.is-collapsed) .leaf-content{min-width:calc(max(100%,var(--sidebar-width)) - 3px);max-width:calc(max(100%,var(--sidebar-width)) - 3px)}#left-sidebar-content{left:0;border-top-right-radius:var(--radius-l);border-bottom-right-radius:var(--radius-l)}#right-sidebar-content{right:0;border-top-left-radius:var(--radius-l);border-bottom-left-radius:var(--radius-l)}.sidebar #left-sidebar-content,.sidebar #right-sidebar-content{contain:none!important;container-type:normal!important;animation:none!important}.sidebar:has(.leaf-content:empty):has(.topbar-content:empty){display:none}.sidebar-topbar{height:calc(2.3em + 2 * var(--sidebar-margin));width:var(--sidebar-width);padding:var(--sidebar-margin);z-index:1;position:fixed;display:flex;align-items:center;transition:width ease-in-out;transition-duration:inherit}.sidebar.is-collapsed .sidebar-topbar{width:calc(2.3em + var(--sidebar-margin) * 2)}.sidebar .sidebar-topbar.is-collapsed{width:0}#left-sidebar .sidebar-topbar{left:0;flex-direction:row;border-top-right-radius:var(--radius-l)}#right-sidebar .sidebar-topbar{right:0;flex-direction:row-reverse;border-top-left-radius:var(--radius-l)}#left-sidebar .topbar-content{margin-right:calc(2.3em + var(--sidebar-margin));flex-direction:row}#right-sidebar .topbar-content{margin-left:calc(2.3em + var(--sidebar-margin));flex-direction:row-reverse}.topbar-content{overflow:hidden visible;overflow:clip visible;width:100%;height:100%;display:flex;align-items:center;transition:inherit}.sidebar.is-collapsed .topbar-content{width:0;transition:inherit}.clickable-icon.sidebar-collapse-icon{background-color:transparent;color:var(--icon-color-focused);padding:2px!important;margin:0!important;height:100%!important;width:2.3em!important;margin-inline:0.14em!important;position:absolute}#left-sidebar .clickable-icon.sidebar-collapse-icon{transform:rotateY(180deg);right:var(--sidebar-margin)}#right-sidebar .clickable-icon.sidebar-collapse-icon{transform:rotateY(180deg);left:var(--sidebar-margin)}.clickable-icon.sidebar-collapse-icon svg.svg-icon{width:100%;height:100%}.feature-title{margin-left:1px;text-transform:uppercase;letter-spacing:.06em;margin-top:.75em;margin-bottom:.75em}.feature-header{display:flex;align-items:center;padding-top:0;font-size:1em;padding-left:0}body.floating-sidebars .sidebar{position:absolute}body{transition:background-color var(--color-fade-speed) ease-in-out}#navbar:not(:empty){display:flex;align-items:center;justify-content:space-between;padding:.5em 1em;width:100%}#main{display:flex;flex-direction:column;height:100%;width:100%;align-items:stretch;justify-content:center}#main-horizontal{display:flex;flex-direction:row;flex-grow:1;width:100%;align-items:stretch;justify-content:center}#center-content{flex-basis:100%;max-width:100%;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;transition:opacity .2s ease-in-out;contain:inline-size}.hide{opacity:0!important;transition:opacity .2s ease-in-out;pointer-events:none}#center-content>.obsidian-document{padding-left:2em;padding-right:1em;margin-bottom:0;width:100%;width:-webkit-fill-available;width:-moz-available;width:fill-available;transition:background-color var(--color-fade-speed) ease-in-out;border-top-right-radius:var(--window-radius,var(--radius-m));border-top-left-radius:var(--window-radius,var(--radius-m));overflow-x:hidden!important;overflow-y:auto!important;display:flex!important;flex-direction:column!important;align-items:center!important;contain:inline-size}body #center-content>.obsidian-document>.markdown-preview-sizer{padding-bottom:80vh;width:100%;max-width:var(--line-width);flex-basis:var(--line-width);transition:background-color var(--color-fade-speed) ease-in-out;contain:inline-size}#center-content>.obsidian-document>div{width:100%!important;transition:background-color var(--color-fade-speed) ease-in-out;contain:inline-size}#center-content>.obsidian-document:not([data-type=markdown]).embed{display:flex;padding:1em;height:100%;width:100%;align-items:center;justify-content:center}#center-content>.obsidian-document:not([data-type=markdown]).embed>*{max-width:100%;max-height:100%;object-fit:contain}:not(h1,h2,h3,h4,h5,h6,li):has(> :is(.math,table)){overflow-x:auto!important}#center-content>.obsidian-document:not([data-type=markdown]){overflow-x:auto;contain:content;padding:0;margin:0;height:100%}.obsidian-document[data-type=attachment]{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;width:100%}.obsidian-document[data-type=attachment]>*{outline:0;border:none;box-shadow:none}.obsidian-document[data-type=attachment] :is(img){max-width:90%;max-height:90%;object-fit:contain}.obsidian-document[data-type=attachment]>:is(audio){width:100%;max-width:min(90%,var(--line-width))}.obsidian-document[data-type=attachment]>:is(embed,iframe,video){width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain}.canvas-wrapper>:is(.header,.footer){z-index:100;position:absolute;display:flex;justify-content:center;flex-direction:column;width:100%;align-items:center}.scroll-highlight{position:absolute;width:100%;height:100%;pointer-events:none;z-index:1000;background-color:hsla(var(--color-accent-hsl),.25);opacity:0;padding:1em;inset:50%;translate:-50% -50%;border-radius:var(--radius-s)}</style>
       <script defer="">async function loadIncludes(){let e=document.querySelectorAll("link[itemprop='include']");for(const t of e){let e=t.getAttribute("href");try{let o="";if(e.startsWith("https:")||e.startsWith("http:")||"file:"!=window.location.protocol){const n=await fetch(e);if(!n.ok){console.log("Could not include file: "+e),t?.remove();continue}o=await n.text()}else{const t=document.getElementById(btoa(encodeURI(e)));if(t){const e=JSON.parse(decodeURI(atob(t.getAttribute("value")??"")));o=e?.data??""}}let n=document.createRange().createContextualFragment(o);t.before(n),t.remove(),console.log("Included text: "+o),console.log("Included file: "+e)}catch(o){t?.remove(),console.log("Could not include file: "+e,o);continue}}}document.addEventListener("DOMContentLoaded",(()=>{loadIncludes()}));let isFileProtocol="file:"==location.protocol;function waitLoadScripts(e,t){let o=e.map((e=>document.getElementById(e+"-script")));!function e(n){let l=o[n],c=n+1;l?(l&&"true"!=l.getAttribute("loaded")||n<o.length&&e(c),n<o.length&&l.addEventListener("load",(()=>e(c)))):n<o.length?e(c):t()}(0)}</script>
    </head>
-	<!-- === ФИЛЬТРАЦИЯ ТАБЛИЦЫ === -->
-	<script>
-	(function () {
-	  // ===== Защита от повторной инициализации =====
-	  const FILTER_ID = "table-filter-bar";
-
-	  function initTableFilter() {
-		// Если панель уже существует — удаляем старую и пересоздаём
-		// (таблица могла перерисоваться, а панель — остаться мёртвой)
-		const old = document.getElementById(FILTER_ID);
-		if (old) old.remove();
-
-		const table = document.querySelector("table.dataview.table-view-table");
-		if (!table) return;
-
-		const tbody = table.querySelector("tbody.table-view-tbody");
-		if (!tbody) return;
-
-		const rows = Array.from(tbody.querySelectorAll("tr"));
-		const totalCount = rows.length;
-		if (totalCount === 0) return;
-
-		// --- Собрать уникальные значения столбца ---
-		function getUnique(colIndex) {
-		  const set = new Set();
-		  rows.forEach(r => {
-			const td = r.querySelectorAll("td")[colIndex];
-			if (td) {
-			  const val = td.textContent.trim();
-			  if (val && val !== "-") set.add(val);
-			}
-		  });
-		  return [...set].sort();
-		}
-
-		// --- Общие стили ---
-		const inputCSS = `
-		  padding: 6px 10px;
-		  border: 1px solid var(--background-modifier-border, #444);
-		  border-radius: 4px;
-		  background: var(--background-secondary-alt, #2a2a2d);
-		  color: var(--text-normal, #ddd);
-		  font-size: 13px;
-		  font-family: inherit;
-		`;
-
-		// --- Панель фильтров ---
-		const bar = document.createElement("div");
-		bar.id = FILTER_ID;
-		bar.style.cssText = `
-		  display: flex;
-		  flex-wrap: wrap;
-		  gap: 8px;
-		  margin-bottom: 12px;
-		  align-items: center;
-		`;
-
-		// Текстовый поиск по названию
-		const search = document.createElement("input");
-		search.type = "text";
-		search.placeholder = "🔍 Поиск по названию…";
-		search.style.cssText = inputCSS + "flex: 1 1 180px; min-width: 160px;";
-
-		// Хелпер для <select>
-		function makeSelect(placeholder, colIndex) {
-		  const sel = document.createElement("select");
-		  sel.style.cssText = inputCSS + "cursor: pointer;";
-		  const def = document.createElement("option");
-		  def.value = "";
-		  def.textContent = placeholder;
-		  sel.appendChild(def);
-		  getUnique(colIndex).forEach(v => {
-			const o = document.createElement("option");
-			o.value = v;
-			o.textContent = v;
-			sel.appendChild(o);
-		  });
-		  return sel;
-		}
-
-		const selType   = makeSelect("— Тип —", 1);
-		const selRarity = makeSelect("— Редкость —", 2);
-		const selTune   = makeSelect("— Настройка —", 3);
-
-		// Текстовый поиск по требованию
-		const searchReq = document.createElement("input");
-		searchReq.type = "text";
-		searchReq.placeholder = "🔍 Требование…";
-		searchReq.style.cssText = inputCSS + "flex: 0 1 160px; min-width: 120px;";
-
-		// Кнопка сброса
-		const reset = document.createElement("button");
-		reset.textContent = "✕";
-		reset.title = "Сбросить фильтры";
-		reset.style.cssText = `
-		  padding: 6px 10px;
-		  border: 1px solid var(--background-modifier-border, #444);
-		  border-radius: 4px;
-		  background: transparent;
-		  color: var(--text-muted, #888);
-		  font-size: 14px;
-		  cursor: pointer;
-		  line-height: 1;
-		  transition: color .15s, border-color .15s;
-		`;
-		reset.addEventListener("mouseenter", () => {
-		  reset.style.color = "var(--text-error, #e55)";
-		  reset.style.borderColor = "var(--text-error, #e55)";
-		});
-		reset.addEventListener("mouseleave", () => {
-		  reset.style.color = "var(--text-muted, #888)";
-		  reset.style.borderColor = "var(--background-modifier-border, #444)";
-		});
-
-		// Счётчик
-		const counter = document.createElement("span");
-		counter.style.cssText = `
-		  color: var(--text-muted, #888);
-		  font-size: 12px;
-		  white-space: nowrap;
-		`;
-		counter.textContent = `Найдено: ${totalCount}`;
-
-		bar.append(search, selType, selRarity, selTune, searchReq, reset, counter);
-
-		// Вставляем панель перед таблицей
-		table.parentElement.insertBefore(bar, table);
-
-		// --- Логика фильтрации ---
-		function apply() {
-		  const q  = search.value.toLowerCase().trim();
-		  const ft = selType.value;
-		  const fr = selRarity.value;
-		  const fn = selTune.value;
-		  const fq = searchReq.value.toLowerCase().trim();
-		  let count = 0;
-
-		  rows.forEach(row => {
-			const cells  = row.querySelectorAll("td");
-			const name   = (cells[0]?.textContent || "").toLowerCase();
-			const type   = (cells[1]?.textContent || "").trim();
-			const rarity = (cells[2]?.textContent || "").trim();
-			const tune   = (cells[3]?.textContent || "").trim();
-			const req    = (cells[4]?.textContent || "").toLowerCase().trim();
-
-			const ok =
-			  (!q  || name.includes(q)) &&
-			  (!ft || type   === ft) &&
-			  (!fr || rarity === fr) &&
-			  (!fn || tune   === fn) &&
-			  (!fq || req.includes(fq));
-
-			row.style.display = ok ? "" : "none";
-			if (ok) count++;
-		  });
-
-		  counter.textContent = `Найдено: ${count}`;
-
-		  const hc = table.querySelector("th .dataview.small-text");
-		  if (hc) hc.textContent = count;
-		}
-
-		// Сброс
-		reset.addEventListener("click", () => {
-		  search.value    = "";
-		  selType.value   = "";
-		  selRarity.value = "";
-		  selTune.value   = "";
-		  searchReq.value = "";
-		  apply();
-		  const hc = table.querySelector("th .dataview.small-text");
-		  if (hc) hc.textContent = totalCount;
-		});
-
-		// Слушатели
-		search.addEventListener("input", apply);
-		selType.addEventListener("change", apply);
-		selRarity.addEventListener("change", apply);
-		selTune.addEventListener("change", apply);
-		searchReq.addEventListener("input", apply);
-	  }
-
-	  // ===================================================
-	  //  1. Первоначальная загрузка
-	  // ===================================================
-	  if (document.readyState === "loading") {
-		document.addEventListener("DOMContentLoaded", initTableFilter);
-	  } else {
-		// DOM уже готов (скрипт выполнился позже)
-		initTableFilter();
-	  }
-
-	  // ===================================================
-	  //  2. Возврат из bfcache (кнопка «Назад» в браузере)
-	  // ===================================================
-	  window.addEventListener("pageshow", function (event) {
-		if (event.persisted) {
-		  initTableFilter();
-		}
-	  });
-
-	  // ===================================================
-	  //  3. SPA-навигация / popstate (History API)
-	  // ===================================================
-	  window.addEventListener("popstate", function () {
-		// Небольшая задержка — дать контенту отрисоваться
-		setTimeout(initTableFilter, 100);
-	  });
-
-	  // ===================================================
-	  //  4. MutationObserver — если контент подгружается
-	  //     динамически (AJAX / fetch / framework)
-	  // ===================================================
-	  let observerTimer = null;
-	  const observer = new MutationObserver(function () {
-		// Таблица появилась, а панели ещё нет
-		const tableExists = document.querySelector(
-		  "table.dataview.table-view-table"
-		);
-		const barExists = document.getElementById(FILTER_ID);
-
-		if (tableExists && !barExists) {
-		  // Дебаунс: ждём 200 мс после последней мутации
-		  clearTimeout(observerTimer);
-		  observerTimer = setTimeout(initTableFilter, 200);
-		}
-	  });
-
-	  observer.observe(document.body, {
-		childList: true,
-		subtree: true,
-	  });
-	})();
-	</script>
    <body class="publish css-settings-manager mod-windows is-hidden-frameless styled-scrollbars show-inline-title show-ribbon sidebar-float-bottom check-color check-bg hr-no-icon slrvb-g is-focused">
       <script defer="">let theme=localStorage.getItem("theme")||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");"dark"==theme?(document.body.classList.add("theme-dark"),document.body.classList.remove("theme-light")):(document.body.classList.add("theme-light"),document.body.classList.remove("theme-dark")),window.innerWidth<480?document.body.classList.add("is-phone"):window.innerWidth<768?document.body.classList.add("is-tablet"):window.innerWidth<1024?document.body.classList.add("is-small-screen"):document.body.classList.add("is-large-screen")</script>
       <div class="parsed-feature-container" style="display: contents;">
@@ -1017,6 +783,240 @@
                                        </tr>
                                     </tbody>
                                  </table>
+									<!-- === ФИЛЬТРАЦИЯ ТАБЛИЦЫ === -->
+								<script>
+								(function () {
+								  // ===== Защита от повторной инициализации =====
+								  const FILTER_ID = "table-filter-bar";
+
+								  function initTableFilter() {
+									// Если панель уже существует — удаляем старую и пересоздаём
+									// (таблица могла перерисоваться, а панель — остаться мёртвой)
+									const old = document.getElementById(FILTER_ID);
+									if (old) old.remove();
+
+									const table = document.querySelector("table.dataview.table-view-table");
+									if (!table) return;
+
+									const tbody = table.querySelector("tbody.table-view-tbody");
+									if (!tbody) return;
+
+									const rows = Array.from(tbody.querySelectorAll("tr"));
+									const totalCount = rows.length;
+									if (totalCount === 0) return;
+
+									// --- Собрать уникальные значения столбца ---
+									function getUnique(colIndex) {
+									  const set = new Set();
+									  rows.forEach(r => {
+										const td = r.querySelectorAll("td")[colIndex];
+										if (td) {
+										  const val = td.textContent.trim();
+										  if (val && val !== "-") set.add(val);
+										}
+									  });
+									  return [...set].sort();
+									}
+
+									// --- Общие стили ---
+									const inputCSS = `
+									  padding: 6px 10px;
+									  border: 1px solid var(--background-modifier-border, #444);
+									  border-radius: 4px;
+									  background: var(--background-secondary-alt, #2a2a2d);
+									  color: var(--text-normal, #ddd);
+									  font-size: 13px;
+									  font-family: inherit;
+									`;
+
+									// --- Панель фильтров ---
+									const bar = document.createElement("div");
+									bar.id = FILTER_ID;
+									bar.style.cssText = `
+									  display: flex;
+									  flex-wrap: wrap;
+									  gap: 8px;
+									  margin-bottom: 12px;
+									  align-items: center;
+									`;
+
+									// Текстовый поиск по названию
+									const search = document.createElement("input");
+									search.type = "text";
+									search.placeholder = "🔍 Поиск по названию…";
+									search.style.cssText = inputCSS + "flex: 1 1 180px; min-width: 160px;";
+
+									// Хелпер для <select>
+									function makeSelect(placeholder, colIndex) {
+									  const sel = document.createElement("select");
+									  sel.style.cssText = inputCSS + "cursor: pointer;";
+									  const def = document.createElement("option");
+									  def.value = "";
+									  def.textContent = placeholder;
+									  sel.appendChild(def);
+									  getUnique(colIndex).forEach(v => {
+										const o = document.createElement("option");
+										o.value = v;
+										o.textContent = v;
+										sel.appendChild(o);
+									  });
+									  return sel;
+									}
+
+									const selType   = makeSelect("— Тип —", 1);
+									const selRarity = makeSelect("— Редкость —", 2);
+									const selTune   = makeSelect("— Настройка —", 3);
+
+									// Текстовый поиск по требованию
+									const searchReq = document.createElement("input");
+									searchReq.type = "text";
+									searchReq.placeholder = "🔍 Требование…";
+									searchReq.style.cssText = inputCSS + "flex: 0 1 160px; min-width: 120px;";
+
+									// Кнопка сброса
+									const reset = document.createElement("button");
+									reset.textContent = "✕";
+									reset.title = "Сбросить фильтры";
+									reset.style.cssText = `
+									  padding: 6px 10px;
+									  border: 1px solid var(--background-modifier-border, #444);
+									  border-radius: 4px;
+									  background: transparent;
+									  color: var(--text-muted, #888);
+									  font-size: 14px;
+									  cursor: pointer;
+									  line-height: 1;
+									  transition: color .15s, border-color .15s;
+									`;
+									reset.addEventListener("mouseenter", () => {
+									  reset.style.color = "var(--text-error, #e55)";
+									  reset.style.borderColor = "var(--text-error, #e55)";
+									});
+									reset.addEventListener("mouseleave", () => {
+									  reset.style.color = "var(--text-muted, #888)";
+									  reset.style.borderColor = "var(--background-modifier-border, #444)";
+									});
+
+									// Счётчик
+									const counter = document.createElement("span");
+									counter.style.cssText = `
+									  color: var(--text-muted, #888);
+									  font-size: 12px;
+									  white-space: nowrap;
+									`;
+									counter.textContent = `Найдено: ${totalCount}`;
+
+									bar.append(search, selType, selRarity, selTune, searchReq, reset, counter);
+
+									// Вставляем панель перед таблицей
+									table.parentElement.insertBefore(bar, table);
+
+									// --- Логика фильтрации ---
+									function apply() {
+									  const q  = search.value.toLowerCase().trim();
+									  const ft = selType.value;
+									  const fr = selRarity.value;
+									  const fn = selTune.value;
+									  const fq = searchReq.value.toLowerCase().trim();
+									  let count = 0;
+
+									  rows.forEach(row => {
+										const cells  = row.querySelectorAll("td");
+										const name   = (cells[0]?.textContent || "").toLowerCase();
+										const type   = (cells[1]?.textContent || "").trim();
+										const rarity = (cells[2]?.textContent || "").trim();
+										const tune   = (cells[3]?.textContent || "").trim();
+										const req    = (cells[4]?.textContent || "").toLowerCase().trim();
+
+										const ok =
+										  (!q  || name.includes(q)) &&
+										  (!ft || type   === ft) &&
+										  (!fr || rarity === fr) &&
+										  (!fn || tune   === fn) &&
+										  (!fq || req.includes(fq));
+
+										row.style.display = ok ? "" : "none";
+										if (ok) count++;
+									  });
+
+									  counter.textContent = `Найдено: ${count}`;
+
+									  const hc = table.querySelector("th .dataview.small-text");
+									  if (hc) hc.textContent = count;
+									}
+
+									// Сброс
+									reset.addEventListener("click", () => {
+									  search.value    = "";
+									  selType.value   = "";
+									  selRarity.value = "";
+									  selTune.value   = "";
+									  searchReq.value = "";
+									  apply();
+									  const hc = table.querySelector("th .dataview.small-text");
+									  if (hc) hc.textContent = totalCount;
+									});
+
+									// Слушатели
+									search.addEventListener("input", apply);
+									selType.addEventListener("change", apply);
+									selRarity.addEventListener("change", apply);
+									selTune.addEventListener("change", apply);
+									searchReq.addEventListener("input", apply);
+								  }
+
+								  // ===================================================
+								  //  1. Первоначальная загрузка
+								  // ===================================================
+								  if (document.readyState === "loading") {
+									document.addEventListener("DOMContentLoaded", initTableFilter);
+								  } else {
+									// DOM уже готов (скрипт выполнился позже)
+									initTableFilter();
+								  }
+
+								  // ===================================================
+								  //  2. Возврат из bfcache (кнопка «Назад» в браузере)
+								  // ===================================================
+								  window.addEventListener("pageshow", function (event) {
+									if (event.persisted) {
+									  initTableFilter();
+									}
+								  });
+
+								  // ===================================================
+								  //  3. SPA-навигация / popstate (History API)
+								  // ===================================================
+								  window.addEventListener("popstate", function () {
+									// Небольшая задержка — дать контенту отрисоваться
+									setTimeout(initTableFilter, 100);
+								  });
+
+								  // ===================================================
+								  //  4. MutationObserver — если контент подгружается
+								  //     динамически (AJAX / fetch / framework)
+								  // ===================================================
+								  let observerTimer = null;
+								  const observer = new MutationObserver(function () {
+									// Таблица появилась, а панели ещё нет
+									const tableExists = document.querySelector(
+									  "table.dataview.table-view-table"
+									);
+									const barExists = document.getElementById(FILTER_ID);
+
+									if (tableExists && !barExists) {
+									  // Дебаунс: ждём 200 мс после последней мутации
+									  clearTimeout(observerTimer);
+									  observerTimer = setTimeout(initTableFilter, 200);
+									}
+								  });
+
+								  observer.observe(document.body, {
+									childList: true,
+									subtree: true,
+								  });
+								})();
+								</script> 
                               </div>
                            </div>
                         </div>
