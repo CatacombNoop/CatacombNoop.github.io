@@ -39,173 +39,173 @@
       <script defer="">async function loadIncludes(){let e=document.querySelectorAll("link[itemprop='include']");for(const t of e){let e=t.getAttribute("href");try{let o="";if(e.startsWith("https:")||e.startsWith("http:")||"file:"!=window.location.protocol){const n=await fetch(e);if(!n.ok){console.log("Could not include file: "+e),t?.remove();continue}o=await n.text()}else{const t=document.getElementById(btoa(encodeURI(e)));if(t){const e=JSON.parse(decodeURI(atob(t.getAttribute("value")??"")));o=e?.data??""}}let n=document.createRange().createContextualFragment(o);t.before(n),t.remove(),console.log("Included text: "+o),console.log("Included file: "+e)}catch(o){t?.remove(),console.log("Could not include file: "+e,o);continue}}}document.addEventListener("DOMContentLoaded",(()=>{loadIncludes()}));let isFileProtocol="file:"==location.protocol;function waitLoadScripts(e,t){let o=e.map((e=>document.getElementById(e+"-script")));!function e(n){let l=o[n],c=n+1;l?(l&&"true"!=l.getAttribute("loaded")||n<o.length&&e(c),n<o.length&&l.addEventListener("load",(()=>e(c)))):n<o.length?e(c):t()}(0)}</script>
    </head>
 <!-- === ФИЛЬТРАЦИЯ ТАБЛИЦЫ === -->
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-  const table = document.querySelector("table.dataview.table-view-table");
-  if (!table) return;
+	<script>
+	document.addEventListener("DOMContentLoaded", () => {
+	  const table = document.querySelector("table.dataview.table-view-table");
+	  if (!table) return;
 
-  const tbody = table.querySelector("tbody.table-view-tbody");
-  if (!tbody) return;
-  const rows = Array.from(tbody.querySelectorAll("tr"));
-  const totalCount = rows.length;
+	  const tbody = table.querySelector("tbody.table-view-tbody");
+	  if (!tbody) return;
+	  const rows = Array.from(tbody.querySelectorAll("tr"));
+	  const totalCount = rows.length;
 
-  // --- Собрать уникальные значения столбца ---
-  function getUnique(colIndex) {
-    const set = new Set();
-    rows.forEach(r => {
-      const td = r.querySelectorAll("td")[colIndex];
-      if (td) {
-        const val = td.textContent.trim();
-        if (val && val !== "-") set.add(val);
-      }
-    });
-    return [...set].sort();
-  }
+	  // --- Собрать уникальные значения столбца ---
+	  function getUnique(colIndex) {
+		const set = new Set();
+		rows.forEach(r => {
+		  const td = r.querySelectorAll("td")[colIndex];
+		  if (td) {
+			const val = td.textContent.trim();
+			if (val && val !== "-") set.add(val);
+		  }
+		});
+		return [...set].sort();
+	  }
 
-  // --- Общие стили ---
-  const inputCSS = `
-    padding: 6px 10px;
-    border: 1px solid var(--background-modifier-border, #444);
-    border-radius: 4px;
-    background: var(--background-secondary-alt, #2a2a2d);
-    color: var(--text-normal, #ddd);
-    font-size: 13px;
-    font-family: inherit;
-  `;
+	  // --- Общие стили ---
+	  const inputCSS = `
+		padding: 6px 10px;
+		border: 1px solid var(--background-modifier-border, #444);
+		border-radius: 4px;
+		background: var(--background-secondary-alt, #2a2a2d);
+		color: var(--text-normal, #ddd);
+		font-size: 13px;
+		font-family: inherit;
+	  `;
 
-  // --- Панель фильтров ---
-  const bar = document.createElement("div");
-  bar.id = "table-filter-bar";
-  bar.style.cssText = `
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 12px;
-    align-items: center;
-  `;
+	  // --- Панель фильтров ---
+	  const bar = document.createElement("div");
+	  bar.id = "table-filter-bar";
+	  bar.style.cssText = `
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+		margin-bottom: 12px;
+		align-items: center;
+	  `;
 
-  // Текстовый поиск
-  const search = document.createElement("input");
-  search.type = "text";
-  search.placeholder = "🔍 Поиск по названию…";
-  search.style.cssText = inputCSS + "flex: 1 1 180px; min-width: 160px;";
+	  // Текстовый поиск
+	  const search = document.createElement("input");
+	  search.type = "text";
+	  search.placeholder = "🔍 Поиск по названию…";
+	  search.style.cssText = inputCSS + "flex: 1 1 180px; min-width: 160px;";
 
-  // Хелпер для <select>
-  function makeSelect(placeholder, colIndex) {
-    const sel = document.createElement("select");
-    sel.style.cssText = inputCSS + "cursor: pointer;";
-    const def = document.createElement("option");
-    def.value = "";
-    def.textContent = placeholder;
-    sel.appendChild(def);
-    getUnique(colIndex).forEach(v => {
-      const o = document.createElement("option");
-      o.value = v;
-      o.textContent = v;
-      sel.appendChild(o);
-    });
-    return sel;
-  }
+	  // Хелпер для <select>
+	  function makeSelect(placeholder, colIndex) {
+		const sel = document.createElement("select");
+		sel.style.cssText = inputCSS + "cursor: pointer;";
+		const def = document.createElement("option");
+		def.value = "";
+		def.textContent = placeholder;
+		sel.appendChild(def);
+		getUnique(colIndex).forEach(v => {
+		  const o = document.createElement("option");
+		  o.value = v;
+		  o.textContent = v;
+		  sel.appendChild(o);
+		});
+		return sel;
+	  }
 
-  const selType   = makeSelect("— Тип —", 1);
-  const selRarity = makeSelect("— Редкость —", 2);
-  const selTune   = makeSelect("— Настройка —", 3);
-  const selReq    = makeSelect("— Требование —", 4);
+	  const selType   = makeSelect("— Тип —", 1);
+	  const selRarity = makeSelect("— Редкость —", 2);
+	  const selTune   = makeSelect("— Настройка —", 3);
+	  const selReq    = makeSelect("— Требование —", 4);
 
-  // Кнопка сброса
-  const reset = document.createElement("button");
-  reset.textContent = "✕";
-  reset.title = "Сбросить фильтры";
-  reset.style.cssText = `
-    padding: 6px 10px;
-    border: 1px solid var(--background-modifier-border, #444);
-    border-radius: 4px;
-    background: transparent;
-    color: var(--text-muted, #888);
-    font-size: 14px;
-    cursor: pointer;
-    line-height: 1;
-    transition: color .15s, border-color .15s;
-  `;
-  reset.addEventListener("mouseenter", () => {
-    reset.style.color = "var(--text-error, #e55)";
-    reset.style.borderColor = "var(--text-error, #e55)";
-  });
-  reset.addEventListener("mouseleave", () => {
-    reset.style.color = "var(--text-muted, #888)";
-    reset.style.borderColor = "var(--background-modifier-border, #444)";
-  });
+	  // Кнопка сброса
+	  const reset = document.createElement("button");
+	  reset.textContent = "✕";
+	  reset.title = "Сбросить фильтры";
+	  reset.style.cssText = `
+		padding: 6px 10px;
+		border: 1px solid var(--background-modifier-border, #444);
+		border-radius: 4px;
+		background: transparent;
+		color: var(--text-muted, #888);
+		font-size: 14px;
+		cursor: pointer;
+		line-height: 1;
+		transition: color .15s, border-color .15s;
+	  `;
+	  reset.addEventListener("mouseenter", () => {
+		reset.style.color = "var(--text-error, #e55)";
+		reset.style.borderColor = "var(--text-error, #e55)";
+	  });
+	  reset.addEventListener("mouseleave", () => {
+		reset.style.color = "var(--text-muted, #888)";
+		reset.style.borderColor = "var(--background-modifier-border, #444)";
+	  });
 
-  // Счётчик
-  const counter = document.createElement("span");
-  counter.style.cssText = `
-    color: var(--text-muted, #888);
-    font-size: 12px;
-    white-space: nowrap;
-  `;
-  counter.textContent = `Найдено: ${totalCount}`;
+	  // Счётчик
+	  const counter = document.createElement("span");
+	  counter.style.cssText = `
+		color: var(--text-muted, #888);
+		font-size: 12px;
+		white-space: nowrap;
+	  `;
+	  counter.textContent = `Найдено: ${totalCount}`;
 
-  bar.append(search, selType, selRarity, selTune, selReq, reset, counter);
+	  bar.append(search, selType, selRarity, selTune, selReq, reset, counter);
 
-  // Вставляем панель перед таблицей
-  table.parentElement.insertBefore(bar, table);
+	  // Вставляем панель перед таблицей
+	  table.parentElement.insertBefore(bar, table);
 
-  // --- Логика фильтрации ---
-  function apply() {
-    const q  = search.value.toLowerCase().trim();
-    const ft = selType.value;
-    const fr = selRarity.value;
-    const fn = selTune.value;
-    const fq = selReq.value;
-    let count = 0;
+	  // --- Логика фильтрации ---
+	  function apply() {
+		const q  = search.value.toLowerCase().trim();
+		const ft = selType.value;
+		const fr = selRarity.value;
+		const fn = selTune.value;
+		const fq = selReq.value;
+		let count = 0;
 
-    rows.forEach(row => {
-      const cells = row.querySelectorAll("td");
-      const name   = (cells[0]?.textContent || "").toLowerCase();
-      const type   = (cells[1]?.textContent || "").trim();
-      const rarity = (cells[2]?.textContent || "").trim();
-      const tune   = (cells[3]?.textContent || "").trim();
-      const req    = (cells[4]?.textContent || "").trim();
+		rows.forEach(row => {
+		  const cells = row.querySelectorAll("td");
+		  const name   = (cells[0]?.textContent || "").toLowerCase();
+		  const type   = (cells[1]?.textContent || "").trim();
+		  const rarity = (cells[2]?.textContent || "").trim();
+		  const tune   = (cells[3]?.textContent || "").trim();
+		  const req    = (cells[4]?.textContent || "").trim();
 
-      const ok =
-        (!q  || name.includes(q)) &&
-        (!ft || type   === ft) &&
-        (!fr || rarity === fr) &&
-        (!fn || tune   === fn) &&
-        (!fq || req.includes(fq));
+		  const ok =
+			(!q  || name.includes(q)) &&
+			(!ft || type   === ft) &&
+			(!fr || rarity === fr) &&
+			(!fn || tune   === fn) &&
+			(!fq || req.includes(fq));
 
-      row.style.display = ok ? "" : "none";
-      if (ok) count++;
-    });
+		  row.style.display = ok ? "" : "none";
+		  if (ok) count++;
+		});
 
-    counter.textContent = `Найдено: ${count}`;
+		counter.textContent = `Найдено: ${count}`;
 
-    // Обновить счётчик в заголовке таблицы
-    const hc = table.querySelector("th .dataview.small-text");
-    if (hc) hc.textContent = count;
-  }
+		// Обновить счётчик в заголовке таблицы
+		const hc = table.querySelector("th .dataview.small-text");
+		if (hc) hc.textContent = count;
+	  }
 
-  // Сброс
-  reset.addEventListener("click", () => {
-    search.value = "";
-    selType.value = "";
-    selRarity.value = "";
-    selTune.value = "";
-    selReq.value = "";
-    apply();
-    // Восстановить оригинальный счётчик
-    const hc = table.querySelector("th .dataview.small-text");
-    if (hc) hc.textContent = totalCount;
-  });
+	  // Сброс
+	  reset.addEventListener("click", () => {
+		search.value = "";
+		selType.value = "";
+		selRarity.value = "";
+		selTune.value = "";
+		selReq.value = "";
+		apply();
+		// Восстановить оригинальный счётчик
+		const hc = table.querySelector("th .dataview.small-text");
+		if (hc) hc.textContent = totalCount;
+	  });
 
-  // Слушатели
-  search.addEventListener("input", apply);
-  selType.addEventListener("change", apply);
-  selRarity.addEventListener("change", apply);
-  selTune.addEventListener("change", apply);
-  selReq.addEventListener("change", apply);
-});
-</script>
+	  // Слушатели
+	  search.addEventListener("input", apply);
+	  selType.addEventListener("change", apply);
+	  selRarity.addEventListener("change", apply);
+	  selTune.addEventListener("change", apply);
+	  selReq.addEventListener("change", apply);
+	});
+	</script>
    <body class="publish css-settings-manager mod-windows is-hidden-frameless styled-scrollbars show-inline-title show-ribbon sidebar-float-bottom check-color check-bg hr-no-icon slrvb-g is-focused">
       <script defer="">let theme=localStorage.getItem("theme")||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");"dark"==theme?(document.body.classList.add("theme-dark"),document.body.classList.remove("theme-light")):(document.body.classList.add("theme-light"),document.body.classList.remove("theme-dark")),window.innerWidth<480?document.body.classList.add("is-phone"):window.innerWidth<768?document.body.classList.add("is-tablet"):window.innerWidth<1024?document.body.classList.add("is-small-screen"):document.body.classList.add("is-large-screen")</script>
       <div class="parsed-feature-container" style="display: contents;">
@@ -269,7 +269,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                  <table class="dataview table-view-table">
                                     <thead class="table-view-thead">
                                        <tr class="table-view-tr-header">
-                                          <th class="table-view-th"><span>File</span><span class="dataview small-text">58</span></th>
+                                          <th class="table-view-th"><span>File</span><span class="dataview small-text">62</span></th>
                                           <th class="table-view-th"><span>Тип</span></th>
                                           <th class="table-view-th"><span>Редкость</span></th>
                                           <th class="table-view-th"><span>Настройка</span></th>
@@ -358,6 +358,13 @@ document.addEventListener("DOMContentLoaded", () => {
                                           <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Чудесные Предметы/Венец Совершенного Существа.md" data-href="КТМС/Магические Предметы/Чудесные Предметы/Венец Совершенного Существа.md" href="ктмс/магические-предметы/чудесные-предметы/венец-совершенного-существа.html" class="internal-link" target="_self" rel="noopener nofollow">Венец Совершенного Существа</a></span></td>
                                           <td><span>Чудесный Предмет</span></td>
                                           <td><span>Необычный</span></td>
+                                          <td><span>Да</span></td>
+                                          <td><span>-</span></td>
+                                       </tr>
+                                       <tr>
+                                          <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Чудесные Предметы/Вольфрамовые Рёбра.md" data-href="КТМС/Магические Предметы/Чудесные Предметы/Вольфрамовые Рёбра.md" href="ктмс/магические-предметы/чудесные-предметы/вольфрамовые-рёбра.html" class="internal-link" target="_self" rel="noopener nofollow">Вольфрамовые Рёбра</a></span></td>
+                                          <td><span>Чудесный Предмет</span></td>
+                                          <td><span>Легендарный</span></td>
                                           <td><span>Да</span></td>
                                           <td><span>-</span></td>
                                        </tr>
@@ -481,6 +488,13 @@ document.addEventListener("DOMContentLoaded", () => {
                                           <td><span>-</span></td>
                                        </tr>
                                        <tr>
+                                          <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Чудесные Предметы/Кость Первого Убийцы.md" data-href="КТМС/Магические Предметы/Чудесные Предметы/Кость Первого Убийцы.md" href="ктмс/магические-предметы/чудесные-предметы/кость-первого-убийцы.html" class="internal-link" target="_self" rel="noopener nofollow">Кость Первого Убийцы</a></span></td>
+                                          <td><span>Чудесный Предмет</span></td>
+                                          <td><span>Легендарный</span></td>
+                                          <td><span>Да</span></td>
+                                          <td><span>Особое</span></td>
+                                       </tr>
+                                       <tr>
                                           <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Оружие/Лазурный Звёздный Мушкет.md" data-href="КТМС/Магические Предметы/Оружие/Лазурный Звёздный Мушкет.md" href="ктмс/магические-предметы/оружие/лазурный-звёздный-мушкет.html" class="internal-link" target="_self" rel="noopener nofollow">Лазурный Звёздный Мушкет</a></span></td>
                                           <td><span>Оружие</span></td>
                                           <td><span>Очень Редкий</span></td>
@@ -541,11 +555,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                           <td><span>Чудесный Предмет</span></td>
                                           <td><span>Необычный</span></td>
                                           <td><span>Нет</span></td>
-                                          <td>
-                                             <ul class="dataview dataview-ul dataview-result-list-ul">
-                                                <li class="dataview-result-list-li"><span>-</span></li>
-                                             </ul>
-                                          </td>
+                                          <td><span>-</span></td>
                                        </tr>
                                        <tr>
                                           <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Зелья/Настойка Выносливости.md" data-href="КТМС/Магические Предметы/Зелья/Настойка Выносливости.md" href="ктмс/магические-предметы/зелья/настойка-выносливости.html" class="internal-link" target="_self" rel="noopener nofollow">Настойка Выносливости</a></span></td>
@@ -579,6 +589,13 @@ document.addEventListener("DOMContentLoaded", () => {
                                           <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Чудесные Предметы/Плащ Временного Сдвига.md" data-href="КТМС/Магические Предметы/Чудесные Предметы/Плащ Временного Сдвига.md" href="ктмс/магические-предметы/чудесные-предметы/плащ-временного-сдвига.html" class="internal-link" target="_self" rel="noopener nofollow">Плащ Временного Сдвига</a></span></td>
                                           <td><span>Чудесный Предмет</span></td>
                                           <td><span>Редкий</span></td>
+                                          <td><span>Нет</span></td>
+                                          <td><span>-</span></td>
+                                       </tr>
+                                       <tr>
+                                          <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Чудесные Предметы/Плащ Джокера.md" data-href="КТМС/Магические Предметы/Чудесные Предметы/Плащ Джокера.md" href="ктмс/магические-предметы/чудесные-предметы/плащ-джокера.html" class="internal-link" target="_self" rel="noopener nofollow">Плащ Джокера</a></span></td>
+                                          <td><span>Чудесный Предмет</span></td>
+                                          <td><span>Очень Редкий</span></td>
                                           <td><span>Нет</span></td>
                                           <td><span>-</span></td>
                                        </tr>
@@ -674,6 +691,13 @@ document.addEventListener("DOMContentLoaded", () => {
                                           <td><span>-</span></td>
                                        </tr>
                                        <tr>
+                                          <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Оружие/Электрический Меч Балора.md" data-href="КТМС/Магические Предметы/Оружие/Электрический Меч Балора.md" href="ктмс/магические-предметы/оружие/электрический-меч-балора.html" class="internal-link" target="_self" rel="noopener nofollow">Электрический Меч Балора</a></span></td>
+                                          <td><span>Оружие</span></td>
+                                          <td><span>Легендарный</span></td>
+                                          <td><span>Да</span></td>
+                                          <td><span>-</span></td>
+                                       </tr>
+                                       <tr>
                                           <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Чудесные Предметы/Характеристики/Элементальные Скороходы.md" data-href="КТМС/Магические Предметы/Чудесные Предметы/Характеристики/Элементальные Скороходы.md" href="ктмс/магические-предметы/чудесные-предметы/характеристики/элементальные-скороходы.html" class="internal-link" target="_self" rel="noopener nofollow">Элементальные Скороходы</a></span></td>
                                           <td><span>Чудесный Предмет</span></td>
                                           <td><span>Варьируется</span></td>
@@ -692,6 +716,9 @@ document.addEventListener("DOMContentLoaded", () => {
                               </div>
                            </div>
                         </div>
+                     </div>
+                     <div class="el-hr">
+                        <hr>
                      </div>
                      <div class="footer">
                         <div class="data-bar"></div>
