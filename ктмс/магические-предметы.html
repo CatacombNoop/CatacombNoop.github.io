@@ -38,39 +38,27 @@
       <style>body{--line-width:40em;--line-width-adaptive:40em;--file-line-width:40em;--sidebar-width:min(20em, 80vw);--collapse-arrow-size:11px;--tree-vertical-spacing:1.3em;--sidebar-margin:12px}:root{background-color:#202124}.sidebar{height:100%;font-size:14px;z-index:10;min-width:calc(var(--sidebar-width) + var(--divider-width-hover));max-width:calc(var(--sidebar-width) + var(--divider-width-hover));position:relative;overflow:hidden;overflow:clip;transition:min-width ease-in-out,max-width ease-in-out;transition-duration:.2s;contain:size}#left-sidebar{left:0}#right-sidebar{right:0}.sidebar.is-collapsed{min-width:0;max-width:0}.sidebar.floating{position:absolute}.sidebar .leaf-content{height:100%;min-width:calc(var(--sidebar-width) - var(--divider-width-hover));top:0;padding:var(--sidebar-margin);padding-top:4em;line-height:var(--line-height-tight);background-color:var(--background-secondary);transition:background-color,border-right,border-left,box-shadow;transition-duration:var(--color-fade-speed);transition-timing-function:ease-in-out;position:absolute;display:flex;flex-direction:column}.sidebar:not(.is-collapsed) .leaf-content{min-width:calc(max(100%,var(--sidebar-width)) - 3px);max-width:calc(max(100%,var(--sidebar-width)) - 3px)}#left-sidebar-content{left:0;border-top-right-radius:var(--radius-l);border-bottom-right-radius:var(--radius-l)}#right-sidebar-content{right:0;border-top-left-radius:var(--radius-l);border-bottom-left-radius:var(--radius-l)}.sidebar #left-sidebar-content,.sidebar #right-sidebar-content{contain:none!important;container-type:normal!important;animation:none!important}.sidebar:has(.leaf-content:empty):has(.topbar-content:empty){display:none}.sidebar-topbar{height:calc(2.3em + 2 * var(--sidebar-margin));width:var(--sidebar-width);padding:var(--sidebar-margin);z-index:1;position:fixed;display:flex;align-items:center;transition:width ease-in-out;transition-duration:inherit}.sidebar.is-collapsed .sidebar-topbar{width:calc(2.3em + var(--sidebar-margin) * 2)}.sidebar .sidebar-topbar.is-collapsed{width:0}#left-sidebar .sidebar-topbar{left:0;flex-direction:row;border-top-right-radius:var(--radius-l)}#right-sidebar .sidebar-topbar{right:0;flex-direction:row-reverse;border-top-left-radius:var(--radius-l)}#left-sidebar .topbar-content{margin-right:calc(2.3em + var(--sidebar-margin));flex-direction:row}#right-sidebar .topbar-content{margin-left:calc(2.3em + var(--sidebar-margin));flex-direction:row-reverse}.topbar-content{overflow:hidden visible;overflow:clip visible;width:100%;height:100%;display:flex;align-items:center;transition:inherit}.sidebar.is-collapsed .topbar-content{width:0;transition:inherit}.clickable-icon.sidebar-collapse-icon{background-color:transparent;color:var(--icon-color-focused);padding:2px!important;margin:0!important;height:100%!important;width:2.3em!important;margin-inline:0.14em!important;position:absolute}#left-sidebar .clickable-icon.sidebar-collapse-icon{transform:rotateY(180deg);right:var(--sidebar-margin)}#right-sidebar .clickable-icon.sidebar-collapse-icon{transform:rotateY(180deg);left:var(--sidebar-margin)}.clickable-icon.sidebar-collapse-icon svg.svg-icon{width:100%;height:100%}.feature-title{margin-left:1px;text-transform:uppercase;letter-spacing:.06em;margin-top:.75em;margin-bottom:.75em}.feature-header{display:flex;align-items:center;padding-top:0;font-size:1em;padding-left:0}body.floating-sidebars .sidebar{position:absolute}body{transition:background-color var(--color-fade-speed) ease-in-out}#navbar:not(:empty){display:flex;align-items:center;justify-content:space-between;padding:.5em 1em;width:100%}#main{display:flex;flex-direction:column;height:100%;width:100%;align-items:stretch;justify-content:center}#main-horizontal{display:flex;flex-direction:row;flex-grow:1;width:100%;align-items:stretch;justify-content:center}#center-content{flex-basis:100%;max-width:100%;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;transition:opacity .2s ease-in-out;contain:inline-size}.hide{opacity:0!important;transition:opacity .2s ease-in-out;pointer-events:none}#center-content>.obsidian-document{padding-left:2em;padding-right:1em;margin-bottom:0;width:100%;width:-webkit-fill-available;width:-moz-available;width:fill-available;transition:background-color var(--color-fade-speed) ease-in-out;border-top-right-radius:var(--window-radius,var(--radius-m));border-top-left-radius:var(--window-radius,var(--radius-m));overflow-x:hidden!important;overflow-y:auto!important;display:flex!important;flex-direction:column!important;align-items:center!important;contain:inline-size}body #center-content>.obsidian-document>.markdown-preview-sizer{padding-bottom:80vh;width:100%;max-width:var(--line-width);flex-basis:var(--line-width);transition:background-color var(--color-fade-speed) ease-in-out;contain:inline-size}#center-content>.obsidian-document>div{width:100%!important;transition:background-color var(--color-fade-speed) ease-in-out;contain:inline-size}#center-content>.obsidian-document:not([data-type=markdown]).embed{display:flex;padding:1em;height:100%;width:100%;align-items:center;justify-content:center}#center-content>.obsidian-document:not([data-type=markdown]).embed>*{max-width:100%;max-height:100%;object-fit:contain}:not(h1,h2,h3,h4,h5,h6,li):has(> :is(.math,table)){overflow-x:auto!important}#center-content>.obsidian-document:not([data-type=markdown]){overflow-x:auto;contain:content;padding:0;margin:0;height:100%}.obsidian-document[data-type=attachment]{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;width:100%}.obsidian-document[data-type=attachment]>*{outline:0;border:none;box-shadow:none}.obsidian-document[data-type=attachment] :is(img){max-width:90%;max-height:90%;object-fit:contain}.obsidian-document[data-type=attachment]>:is(audio){width:100%;max-width:min(90%,var(--line-width))}.obsidian-document[data-type=attachment]>:is(embed,iframe,video){width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain}.canvas-wrapper>:is(.header,.footer){z-index:100;position:absolute;display:flex;justify-content:center;flex-direction:column;width:100%;align-items:center}.scroll-highlight{position:absolute;width:100%;height:100%;pointer-events:none;z-index:1000;background-color:hsla(var(--color-accent-hsl),.25);opacity:0;padding:1em;inset:50%;translate:-50% -50%;border-radius:var(--radius-s)}</style>
       <script defer="">async function loadIncludes(){let e=document.querySelectorAll("link[itemprop='include']");for(const t of e){let e=t.getAttribute("href");try{let o="";if(e.startsWith("https:")||e.startsWith("http:")||"file:"!=window.location.protocol){const n=await fetch(e);if(!n.ok){console.log("Could not include file: "+e),t?.remove();continue}o=await n.text()}else{const t=document.getElementById(btoa(encodeURI(e)));if(t){const e=JSON.parse(decodeURI(atob(t.getAttribute("value")??"")));o=e?.data??""}}let n=document.createRange().createContextualFragment(o);t.before(n),t.remove(),console.log("Included text: "+o),console.log("Included file: "+e)}catch(o){t?.remove(),console.log("Could not include file: "+e,o);continue}}}document.addEventListener("DOMContentLoaded",(()=>{loadIncludes()}));let isFileProtocol="file:"==location.protocol;function waitLoadScripts(e,t){let o=e.map((e=>document.getElementById(e+"-script")));!function e(n){let l=o[n],c=n+1;l?(l&&"true"!=l.getAttribute("loaded")||n<o.length&&e(c),n<o.length&&l.addEventListener("load",(()=>e(c)))):n<o.length?e(c):t()}(0)}</script>
    </head>
-	<!-- === ФИЛЬТРАЦИЯ ТАБЛИЦЫ 2 === -->
+	<!-- === ФИЛЬТРАЦИЯ ТАБЛИЦЫ === -->
 	<script>
 	(function() {
-	  // Защита от повторной инициализации
-	  if (document.getElementById("table-filter-bar")) return;
+	  const FILTER_ID = "table-filter-bar";
 
-	  // ======================================================
-	  // Ждём появления таблицы Dataview (до 10 секунд)
-	  // ======================================================
-	  let attempts = 0;
-	  const maxAttempts = 100; // 100 × 100ms = 10 сек
+	  function initFilters() {
+		// Если фильтр уже есть и подключён — выходим
+		const existingBar = document.getElementById(FILTER_ID);
+		if (existingBar && existingBar.isConnected) return true;
+		if (existingBar) existingBar.remove();
 
-	  const waitForTable = setInterval(() => {
-		attempts++;
+		// Ищем таблицу Dataview
 		const table = document.querySelector("table.dataview.table-view-table");
-		if (table && table.querySelector("tbody.table-view-tbody tr")) {
-		  clearInterval(waitForTable);
-		  initFilters(table);
-		} else if (attempts >= maxAttempts) {
-		  clearInterval(waitForTable);
-		}
-	  }, 100);
-
-	  // ======================================================
-	  // Основная логика — запускается когда таблица готова
-	  // ======================================================
-	  function initFilters(table) {
-		// Защита от повторного запуска
-		if (document.getElementById("table-filter-bar")) return;
+		if (!table) return false;
 
 		const tbody = table.querySelector("tbody.table-view-tbody");
-		if (!tbody) return;
+		if (!tbody) return false;
+
 		const rows = Array.from(tbody.querySelectorAll("tr"));
+		if (rows.length === 0) return false;
+
 		const totalCount = rows.length;
 
 		// --- Собрать уникальные значения столбца ---
@@ -99,7 +87,7 @@
 
 		// --- Панель фильтров ---
 		const bar = document.createElement("div");
-		bar.id = "table-filter-bar";
+		bar.id = FILTER_ID;
 		bar.style.cssText = `
 		  display: flex;
 		  flex-wrap: wrap;
@@ -108,7 +96,7 @@
 		  align-items: center;
 		`;
 
-		// Текстовый поиск по названию
+		// Поиск по названию
 		const search = document.createElement("input");
 		search.type = "text";
 		search.placeholder = "🔍 Поиск по названию…";
@@ -175,8 +163,6 @@
 		counter.textContent = `Найдено: ${totalCount}`;
 
 		bar.append(search, selType, selRarity, selTune, searchReq, reset, counter);
-
-		// Вставляем панель перед таблицей
 		table.parentElement.insertBefore(bar, table);
 
 		// --- Логика фильтрации ---
@@ -208,12 +194,10 @@
 		  });
 
 		  counter.textContent = `Найдено: ${count}`;
-
 		  const hc = table.querySelector("th .dataview.small-text");
 		  if (hc) hc.textContent = count;
 		}
 
-		// Сброс
 		reset.addEventListener("click", () => {
 		  search.value = "";
 		  selType.value = "";
@@ -225,15 +209,47 @@
 		  if (hc) hc.textContent = totalCount;
 		});
 
-		// Слушатели
 		search.addEventListener("input", apply);
 		selType.addEventListener("change", apply);
 		selRarity.addEventListener("change", apply);
 		selTune.addEventListener("change", apply);
 		searchReq.addEventListener("input", apply);
+
+		return true; // успешно
 	  }
+
+	  // ======================================================
+	  // Стратегия запуска: 3 способа одновременно
+	  // ======================================================
+
+	  // 1) Попробовать сразу
+	  if (initFilters()) return;
+
+	  // 2) MutationObserver — ловит момент появления таблицы
+	  const observer = new MutationObserver(() => {
+		if (initFilters()) {
+		  observer.disconnect();
+		}
+	  });
+	  observer.observe(document.body, {
+		childList: true,
+		subtree: true
+	  });
+
+	  // 3) Страховочные таймеры на случай пропуска мутации
+	  [300, 800, 1500, 3000, 5000, 8000].forEach(ms => {
+		setTimeout(() => {
+		  if (initFilters()) {
+			observer.disconnect();
+		  }
+		}, ms);
+	  });
+
+	  // 4) Отключить observer через 30 сек чтобы не висел вечно
+	  setTimeout(() => observer.disconnect(), 30000);
+
 	})();
-	</script>  
+	</script>
    <body class="publish css-settings-manager mod-windows is-hidden-frameless styled-scrollbars show-inline-title show-ribbon sidebar-float-bottom check-color check-bg hr-no-icon slrvb-g is-focused">
       <script defer="">let theme=localStorage.getItem("theme")||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");"dark"==theme?(document.body.classList.add("theme-dark"),document.body.classList.remove("theme-light")):(document.body.classList.add("theme-light"),document.body.classList.remove("theme-dark")),window.innerWidth<480?document.body.classList.add("is-phone"):window.innerWidth<768?document.body.classList.add("is-tablet"):window.innerWidth<1024?document.body.classList.add("is-small-screen"):document.body.classList.add("is-large-screen")</script>
       <div class="parsed-feature-container" style="display: contents;">
