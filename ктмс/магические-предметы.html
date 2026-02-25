@@ -38,7 +38,7 @@
       <style>body{--line-width:40em;--line-width-adaptive:40em;--file-line-width:40em;--sidebar-width:min(20em, 80vw);--collapse-arrow-size:11px;--tree-vertical-spacing:1.3em;--sidebar-margin:12px}:root{background-color:#202124}.sidebar{height:100%;font-size:14px;z-index:10;min-width:calc(var(--sidebar-width) + var(--divider-width-hover));max-width:calc(var(--sidebar-width) + var(--divider-width-hover));position:relative;overflow:hidden;overflow:clip;transition:min-width ease-in-out,max-width ease-in-out;transition-duration:.2s;contain:size}#left-sidebar{left:0}#right-sidebar{right:0}.sidebar.is-collapsed{min-width:0;max-width:0}.sidebar.floating{position:absolute}.sidebar .leaf-content{height:100%;min-width:calc(var(--sidebar-width) - var(--divider-width-hover));top:0;padding:var(--sidebar-margin);padding-top:4em;line-height:var(--line-height-tight);background-color:var(--background-secondary);transition:background-color,border-right,border-left,box-shadow;transition-duration:var(--color-fade-speed);transition-timing-function:ease-in-out;position:absolute;display:flex;flex-direction:column}.sidebar:not(.is-collapsed) .leaf-content{min-width:calc(max(100%,var(--sidebar-width)) - 3px);max-width:calc(max(100%,var(--sidebar-width)) - 3px)}#left-sidebar-content{left:0;border-top-right-radius:var(--radius-l);border-bottom-right-radius:var(--radius-l)}#right-sidebar-content{right:0;border-top-left-radius:var(--radius-l);border-bottom-left-radius:var(--radius-l)}.sidebar #left-sidebar-content,.sidebar #right-sidebar-content{contain:none!important;container-type:normal!important;animation:none!important}.sidebar:has(.leaf-content:empty):has(.topbar-content:empty){display:none}.sidebar-topbar{height:calc(2.3em + 2 * var(--sidebar-margin));width:var(--sidebar-width);padding:var(--sidebar-margin);z-index:1;position:fixed;display:flex;align-items:center;transition:width ease-in-out;transition-duration:inherit}.sidebar.is-collapsed .sidebar-topbar{width:calc(2.3em + var(--sidebar-margin) * 2)}.sidebar .sidebar-topbar.is-collapsed{width:0}#left-sidebar .sidebar-topbar{left:0;flex-direction:row;border-top-right-radius:var(--radius-l)}#right-sidebar .sidebar-topbar{right:0;flex-direction:row-reverse;border-top-left-radius:var(--radius-l)}#left-sidebar .topbar-content{margin-right:calc(2.3em + var(--sidebar-margin));flex-direction:row}#right-sidebar .topbar-content{margin-left:calc(2.3em + var(--sidebar-margin));flex-direction:row-reverse}.topbar-content{overflow:hidden visible;overflow:clip visible;width:100%;height:100%;display:flex;align-items:center;transition:inherit}.sidebar.is-collapsed .topbar-content{width:0;transition:inherit}.clickable-icon.sidebar-collapse-icon{background-color:transparent;color:var(--icon-color-focused);padding:2px!important;margin:0!important;height:100%!important;width:2.3em!important;margin-inline:0.14em!important;position:absolute}#left-sidebar .clickable-icon.sidebar-collapse-icon{transform:rotateY(180deg);right:var(--sidebar-margin)}#right-sidebar .clickable-icon.sidebar-collapse-icon{transform:rotateY(180deg);left:var(--sidebar-margin)}.clickable-icon.sidebar-collapse-icon svg.svg-icon{width:100%;height:100%}.feature-title{margin-left:1px;text-transform:uppercase;letter-spacing:.06em;margin-top:.75em;margin-bottom:.75em}.feature-header{display:flex;align-items:center;padding-top:0;font-size:1em;padding-left:0}body.floating-sidebars .sidebar{position:absolute}body{transition:background-color var(--color-fade-speed) ease-in-out}#navbar:not(:empty){display:flex;align-items:center;justify-content:space-between;padding:.5em 1em;width:100%}#main{display:flex;flex-direction:column;height:100%;width:100%;align-items:stretch;justify-content:center}#main-horizontal{display:flex;flex-direction:row;flex-grow:1;width:100%;align-items:stretch;justify-content:center}#center-content{flex-basis:100%;max-width:100%;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;transition:opacity .2s ease-in-out;contain:inline-size}.hide{opacity:0!important;transition:opacity .2s ease-in-out;pointer-events:none}#center-content>.obsidian-document{padding-left:2em;padding-right:1em;margin-bottom:0;width:100%;width:-webkit-fill-available;width:-moz-available;width:fill-available;transition:background-color var(--color-fade-speed) ease-in-out;border-top-right-radius:var(--window-radius,var(--radius-m));border-top-left-radius:var(--window-radius,var(--radius-m));overflow-x:hidden!important;overflow-y:auto!important;display:flex!important;flex-direction:column!important;align-items:center!important;contain:inline-size}body #center-content>.obsidian-document>.markdown-preview-sizer{padding-bottom:80vh;width:100%;max-width:var(--line-width);flex-basis:var(--line-width);transition:background-color var(--color-fade-speed) ease-in-out;contain:inline-size}#center-content>.obsidian-document>div{width:100%!important;transition:background-color var(--color-fade-speed) ease-in-out;contain:inline-size}#center-content>.obsidian-document:not([data-type=markdown]).embed{display:flex;padding:1em;height:100%;width:100%;align-items:center;justify-content:center}#center-content>.obsidian-document:not([data-type=markdown]).embed>*{max-width:100%;max-height:100%;object-fit:contain}:not(h1,h2,h3,h4,h5,h6,li):has(> :is(.math,table)){overflow-x:auto!important}#center-content>.obsidian-document:not([data-type=markdown]){overflow-x:auto;contain:content;padding:0;margin:0;height:100%}.obsidian-document[data-type=attachment]{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;width:100%}.obsidian-document[data-type=attachment]>*{outline:0;border:none;box-shadow:none}.obsidian-document[data-type=attachment] :is(img){max-width:90%;max-height:90%;object-fit:contain}.obsidian-document[data-type=attachment]>:is(audio){width:100%;max-width:min(90%,var(--line-width))}.obsidian-document[data-type=attachment]>:is(embed,iframe,video){width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain}.canvas-wrapper>:is(.header,.footer){z-index:100;position:absolute;display:flex;justify-content:center;flex-direction:column;width:100%;align-items:center}.scroll-highlight{position:absolute;width:100%;height:100%;pointer-events:none;z-index:1000;background-color:hsla(var(--color-accent-hsl),.25);opacity:0;padding:1em;inset:50%;translate:-50% -50%;border-radius:var(--radius-s)}</style>
       <script defer="">async function loadIncludes(){let e=document.querySelectorAll("link[itemprop='include']");for(const t of e){let e=t.getAttribute("href");try{let o="";if(e.startsWith("https:")||e.startsWith("http:")||"file:"!=window.location.protocol){const n=await fetch(e);if(!n.ok){console.log("Could not include file: "+e),t?.remove();continue}o=await n.text()}else{const t=document.getElementById(btoa(encodeURI(e)));if(t){const e=JSON.parse(decodeURI(atob(t.getAttribute("value")??"")));o=e?.data??""}}let n=document.createRange().createContextualFragment(o);t.before(n),t.remove(),console.log("Included text: "+o),console.log("Included file: "+e)}catch(o){t?.remove(),console.log("Could not include file: "+e,o);continue}}}document.addEventListener("DOMContentLoaded",(()=>{loadIncludes()}));let isFileProtocol="file:"==location.protocol;function waitLoadScripts(e,t){let o=e.map((e=>document.getElementById(e+"-script")));!function e(n){let l=o[n],c=n+1;l?(l&&"true"!=l.getAttribute("loaded")||n<o.length&&e(c),n<o.length&&l.addEventListener("load",(()=>e(c)))):n<o.length?e(c):t()}(0)}</script>
    </head>
-<!-- === ФИЛЬТРАЦИЯ ТАБЛИЦЫ === -->
+	<!-- === ФИЛЬТРАЦИЯ ТАБЛИЦЫ === -->
 	<script>
 	document.addEventListener("DOMContentLoaded", () => {
 	  const table = document.querySelector("table.dataview.table-view-table");
@@ -84,7 +84,7 @@
 		align-items: center;
 	  `;
 
-	  // Текстовый поиск
+	  // Текстовый поиск по названию
 	  const search = document.createElement("input");
 	  search.type = "text";
 	  search.placeholder = "🔍 Поиск по названию…";
@@ -110,7 +110,14 @@
 	  const selType   = makeSelect("— Тип —", 1);
 	  const selRarity = makeSelect("— Редкость —", 2);
 	  const selTune   = makeSelect("— Настройка —", 3);
-	  const selReq    = makeSelect("— Требование —", 4);
+
+	  // ======================================================
+	  // Текстовый поиск по требованию (вместо выпадающего списка)
+	  // ======================================================
+	  const searchReq = document.createElement("input");
+	  searchReq.type = "text";
+	  searchReq.placeholder = "🔍 Требование…";
+	  searchReq.style.cssText = inputCSS + "flex: 0 1 160px; min-width: 120px;";
 
 	  // Кнопка сброса
 	  const reset = document.createElement("button");
@@ -145,7 +152,8 @@
 	  `;
 	  counter.textContent = `Найдено: ${totalCount}`;
 
-	  bar.append(search, selType, selRarity, selTune, selReq, reset, counter);
+	  // Заменили selReq на searchReq
+	  bar.append(search, selType, selRarity, selTune, searchReq, reset, counter);
 
 	  // Вставляем панель перед таблицей
 	  table.parentElement.insertBefore(bar, table);
@@ -156,7 +164,8 @@
 		const ft = selType.value;
 		const fr = selRarity.value;
 		const fn = selTune.value;
-		const fq = selReq.value;
+		// ---- текстовый поиск по требованию ----
+		const fq = searchReq.value.toLowerCase().trim();
 		let count = 0;
 
 		rows.forEach(row => {
@@ -165,14 +174,14 @@
 		  const type   = (cells[1]?.textContent || "").trim();
 		  const rarity = (cells[2]?.textContent || "").trim();
 		  const tune   = (cells[3]?.textContent || "").trim();
-		  const req    = (cells[4]?.textContent || "").trim();
+		  const req    = (cells[4]?.textContent || "").toLowerCase().trim();
 
 		  const ok =
 			(!q  || name.includes(q)) &&
 			(!ft || type   === ft) &&
 			(!fr || rarity === fr) &&
 			(!fn || tune   === fn) &&
-			(!fq || req.includes(fq));
+			(!fq || req.includes(fq));   // частичное совпадение
 
 		  row.style.display = ok ? "" : "none";
 		  if (ok) count++;
@@ -180,7 +189,6 @@
 
 		counter.textContent = `Найдено: ${count}`;
 
-		// Обновить счётчик в заголовке таблицы
 		const hc = table.querySelector("th .dataview.small-text");
 		if (hc) hc.textContent = count;
 	  }
@@ -191,9 +199,8 @@
 		selType.value = "";
 		selRarity.value = "";
 		selTune.value = "";
-		selReq.value = "";
+		searchReq.value = "";       // очищаем текстовое поле
 		apply();
-		// Восстановить оригинальный счётчик
 		const hc = table.querySelector("th .dataview.small-text");
 		if (hc) hc.textContent = totalCount;
 	  });
@@ -203,7 +210,7 @@
 	  selType.addEventListener("change", apply);
 	  selRarity.addEventListener("change", apply);
 	  selTune.addEventListener("change", apply);
-	  selReq.addEventListener("change", apply);
+	  searchReq.addEventListener("input", apply);  // input вместо change
 	});
 	</script>
    <body class="publish css-settings-manager mod-windows is-hidden-frameless styled-scrollbars show-inline-title show-ribbon sidebar-float-bottom check-color check-bg hr-no-icon slrvb-g is-focused">
@@ -269,7 +276,7 @@
                                  <table class="dataview table-view-table">
                                     <thead class="table-view-thead">
                                        <tr class="table-view-tr-header">
-                                          <th class="table-view-th"><span>File</span><span class="dataview small-text">62</span></th>
+                                          <th class="table-view-th"><span>File</span><span class="dataview small-text">96</span></th>
                                           <th class="table-view-th"><span>Тип</span></th>
                                           <th class="table-view-th"><span>Редкость</span></th>
                                           <th class="table-view-th"><span>Настройка</span></th>
@@ -277,6 +284,13 @@
                                        </tr>
                                     </thead>
                                     <tbody class="table-view-tbody">
+                                       <tr>
+                                          <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Оружие/Адамантиновый Серп +3.md" data-href="КТМС/Магические Предметы/Оружие/Адамантиновый Серп +3.md" href="ктмс/магические-предметы/оружие/адамантиновый-серп-+3.html" class="internal-link" target="_self" rel="noopener nofollow">Адамантиновый Серп +3</a></span></td>
+                                          <td><span>Оружие</span></td>
+                                          <td><span>Легендарный</span></td>
+                                          <td><span>Да</span></td>
+                                          <td><span>-</span></td>
+                                       </tr>
                                        <tr>
                                           <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Оружие/Алхимический Клинок.md" data-href="КТМС/Магические Предметы/Оружие/Алхимический Клинок.md" href="ктмс/магические-предметы/оружие/алхимический-клинок.html" class="internal-link" target="_self" rel="noopener nofollow">Алхимический Клинок</a></span></td>
                                           <td><span>Оружие</span></td>
@@ -295,6 +309,13 @@
                                           <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Чудесные Предметы/Амулет Воплощения.md" data-href="КТМС/Магические Предметы/Чудесные Предметы/Амулет Воплощения.md" href="ктмс/магические-предметы/чудесные-предметы/амулет-воплощения.html" class="internal-link" target="_self" rel="noopener nofollow">Амулет Воплощения</a></span></td>
                                           <td><span>Чудесный Предмет</span></td>
                                           <td><span>Необычный</span></td>
+                                          <td><span>Нет</span></td>
+                                          <td><span>-</span></td>
+                                       </tr>
+                                       <tr>
+                                          <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Чудесные Предметы/Амулет Защиты от Изменений.md" data-href="КТМС/Магические Предметы/Чудесные Предметы/Амулет Защиты от Изменений.md" href="ктмс/магические-предметы/чудесные-предметы/амулет-защиты-от-изменений.html" class="internal-link" target="_self" rel="noopener nofollow">Амулет Защиты от Изменений</a></span></td>
+                                          <td><span>Чудесный Предмет</span></td>
+                                          <td><span>Очень Редкий</span></td>
                                           <td><span>Нет</span></td>
                                           <td><span>-</span></td>
                                        </tr>
@@ -355,6 +376,27 @@
                                           <td><span>-</span></td>
                                        </tr>
                                        <tr>
+                                          <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Чудесные Предметы/Бесшумные Сапоги Люция.md" data-href="КТМС/Магические Предметы/Чудесные Предметы/Бесшумные Сапоги Люция.md" href="ктмс/магические-предметы/чудесные-предметы/бесшумные-сапоги-люция.html" class="internal-link" target="_self" rel="noopener nofollow">Бесшумные Сапоги Люция</a></span></td>
+                                          <td><span>Чудесный Предмет</span></td>
+                                          <td><span>Легендарный</span></td>
+                                          <td><span>Да</span></td>
+                                          <td><span>-</span></td>
+                                       </tr>
+                                       <tr>
+                                          <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Чудесные Предметы/Бурильный Боб.md" data-href="КТМС/Магические Предметы/Чудесные Предметы/Бурильный Боб.md" href="ктмс/магические-предметы/чудесные-предметы/бурильный-боб.html" class="internal-link" target="_self" rel="noopener nofollow">Бурильный Боб</a></span></td>
+                                          <td><span>Чудесный Предмет</span></td>
+                                          <td><span>Легендарный</span></td>
+                                          <td><span>Нет</span></td>
+                                          <td><span>-</span></td>
+                                       </tr>
+                                       <tr>
+                                          <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Чудесные Предметы/Бутылка Лишнего Времени.md" data-href="КТМС/Магические Предметы/Чудесные Предметы/Бутылка Лишнего Времени.md" href="ктмс/магические-предметы/чудесные-предметы/бутылка-лишнего-времени.html" class="internal-link" target="_self" rel="noopener nofollow">Бутылка Лишнего Времени</a></span></td>
+                                          <td><span>Чудесный Предмет</span></td>
+                                          <td><span>Очень Редкий</span></td>
+                                          <td><span>Нет</span></td>
+                                          <td><span>-</span></td>
+                                       </tr>
+                                       <tr>
                                           <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Чудесные Предметы/Венец Совершенного Существа.md" data-href="КТМС/Магические Предметы/Чудесные Предметы/Венец Совершенного Существа.md" href="ктмс/магические-предметы/чудесные-предметы/венец-совершенного-существа.html" class="internal-link" target="_self" rel="noopener nofollow">Венец Совершенного Существа</a></span></td>
                                           <td><span>Чудесный Предмет</span></td>
                                           <td><span>Необычный</span></td>
@@ -365,6 +407,13 @@
                                           <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Чудесные Предметы/Вольфрамовые Рёбра.md" data-href="КТМС/Магические Предметы/Чудесные Предметы/Вольфрамовые Рёбра.md" href="ктмс/магические-предметы/чудесные-предметы/вольфрамовые-рёбра.html" class="internal-link" target="_self" rel="noopener nofollow">Вольфрамовые Рёбра</a></span></td>
                                           <td><span>Чудесный Предмет</span></td>
                                           <td><span>Легендарный</span></td>
+                                          <td><span>Да</span></td>
+                                          <td><span>-</span></td>
+                                       </tr>
+                                       <tr>
+                                          <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Чудесные Предметы/Гальванический Плащ.md" data-href="КТМС/Магические Предметы/Чудесные Предметы/Гальванический Плащ.md" href="ктмс/магические-предметы/чудесные-предметы/гальванический-плащ.html" class="internal-link" target="_self" rel="noopener nofollow">Гальванический Плащ</a></span></td>
+                                          <td><span>Чудесный предмет</span></td>
+                                          <td><span>Очень Редкий</span></td>
                                           <td><span>Да</span></td>
                                           <td><span>-</span></td>
                                        </tr>
@@ -460,11 +509,25 @@
                                           <td><span>-</span></td>
                                        </tr>
                                        <tr>
+                                          <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Чудесные Предметы/Игрушечная Жужжалка.md" data-href="КТМС/Магические Предметы/Чудесные Предметы/Игрушечная Жужжалка.md" href="ктмс/магические-предметы/чудесные-предметы/игрушечная-жужжалка.html" class="internal-link" target="_self" rel="noopener nofollow">Игрушечная Жужжалка</a></span></td>
+                                          <td><span>-</span></td>
+                                          <td><span>-</span></td>
+                                          <td><span>-</span></td>
+                                          <td><span>-</span></td>
+                                       </tr>
+                                       <tr>
                                           <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Чудесные Предметы/Характеристики/Камень Великого Разума.md" data-href="КТМС/Магические Предметы/Чудесные Предметы/Характеристики/Камень Великого Разума.md" href="ктмс/магические-предметы/чудесные-предметы/характеристики/камень-великого-разума.html" class="internal-link" target="_self" rel="noopener nofollow">Камень Великого Разума</a></span></td>
                                           <td><span>Чудесный Предмет</span></td>
                                           <td><span>Варьируется</span></td>
                                           <td><span>Да</span></td>
                                           <td><span>-</span></td>
+                                       </tr>
+                                       <tr>
+                                          <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Чудесные Предметы/Капитанская Треуголка Всевосприятия.md" data-href="КТМС/Магические Предметы/Чудесные Предметы/Капитанская Треуголка Всевосприятия.md" href="ктмс/магические-предметы/чудесные-предметы/капитанская-треуголка-всевосприятия.html" class="internal-link" target="_self" rel="noopener nofollow">Капитанская Треуголка Всевосприятия</a></span></td>
+                                          <td><span>Чудесный Предмет</span></td>
+                                          <td><span>Легендарный</span></td>
+                                          <td><span>Да</span></td>
+                                          <td><span>Особое</span></td>
                                        </tr>
                                        <tr>
                                           <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Чудесные Предметы/Катализатор Прогресса.md" data-href="КТМС/Магические Предметы/Чудесные Предметы/Катализатор Прогресса.md" href="ктмс/магические-предметы/чудесные-предметы/катализатор-прогресса.html" class="internal-link" target="_self" rel="noopener nofollow">Катализатор Прогресса</a></span></td>
@@ -493,6 +556,20 @@
                                           <td><span>Легендарный</span></td>
                                           <td><span>Да</span></td>
                                           <td><span>Особое</span></td>
+                                       </tr>
+                                       <tr>
+                                          <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Оружие/Кровопускатель.md" data-href="КТМС/Магические Предметы/Оружие/Кровопускатель.md" href="ктмс/магические-предметы/оружие/кровопускатель.html" class="internal-link" target="_self" rel="noopener nofollow">Кровопускатель</a></span></td>
+                                          <td><span>Оружие</span></td>
+                                          <td><span>Очень Редкий</span></td>
+                                          <td><span>Да</span></td>
+                                          <td><span>-</span></td>
+                                       </tr>
+                                       <tr>
+                                          <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Чудесные Предметы/Крутой деловой пиджак из кожи Бабау.md" data-href="КТМС/Магические Предметы/Чудесные Предметы/Крутой деловой пиджак из кожи Бабау.md" href="ктмс/магические-предметы/чудесные-предметы/крутой-деловой-пиджак-из-кожи-бабау.html" class="internal-link" target="_self" rel="noopener nofollow">Крутой деловой пиджак из кожи Бабау</a></span></td>
+                                          <td><span>Чудесный предмет</span></td>
+                                          <td><span>Очень Редкий</span></td>
+                                          <td><span>Нет</span></td>
+                                          <td><span>-</span></td>
                                        </tr>
                                        <tr>
                                           <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Оружие/Лазурный Звёздный Мушкет.md" data-href="КТМС/Магические Предметы/Оружие/Лазурный Звёздный Мушкет.md" href="ктмс/магические-предметы/оружие/лазурный-звёздный-мушкет.html" class="internal-link" target="_self" rel="noopener nofollow">Лазурный Звёздный Мушкет</a></span></td>
@@ -558,6 +635,34 @@
                                           <td><span>-</span></td>
                                        </tr>
                                        <tr>
+                                          <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Чудесные Предметы/Механомагические Инструменты.md" data-href="КТМС/Магические Предметы/Чудесные Предметы/Механомагические Инструменты.md" href="ктмс/магические-предметы/чудесные-предметы/механомагические-инструменты.html" class="internal-link" target="_self" rel="noopener nofollow">Механомагические Инструменты</a></span></td>
+                                          <td><span>Чудесный Предмет</span></td>
+                                          <td><span>Очень Редкий</span></td>
+                                          <td><span>Нет</span></td>
+                                          <td><span>-</span></td>
+                                       </tr>
+                                       <tr>
+                                          <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Оружие/Меч Ночи.md" data-href="КТМС/Магические Предметы/Оружие/Меч Ночи.md" href="ктмс/магические-предметы/оружие/меч-ночи.html" class="internal-link" target="_self" rel="noopener nofollow">Меч Ночи</a></span></td>
+                                          <td><span>Оружие</span></td>
+                                          <td><span>Очень Редкий</span></td>
+                                          <td><span>Да</span></td>
+                                          <td><span>-</span></td>
+                                       </tr>
+                                       <tr>
+                                          <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Чудесные Предметы/Подпространство/Миззиевый Алхимический Пояс.md" data-href="КТМС/Магические Предметы/Чудесные Предметы/Подпространство/Миззиевый Алхимический Пояс.md" href="ктмс/магические-предметы/чудесные-предметы/подпространство/миззиевый-алхимический-пояс.html" class="internal-link" target="_self" rel="noopener nofollow">Миззиевый Алхимический Пояс</a></span></td>
+                                          <td><span>Чудесный Предмет</span></td>
+                                          <td><span>Легендарный</span></td>
+                                          <td><span>Необязательно</span></td>
+                                          <td><span>-</span></td>
+                                       </tr>
+                                       <tr>
+                                          <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Чудесные Предметы/Наряд Совратителя.md" data-href="КТМС/Магические Предметы/Чудесные Предметы/Наряд Совратителя.md" href="ктмс/магические-предметы/чудесные-предметы/наряд-совратителя.html" class="internal-link" target="_self" rel="noopener nofollow">Наряд Совратителя</a></span></td>
+                                          <td><span>Чудесный предмет</span></td>
+                                          <td><span>Очень Редкий</span></td>
+                                          <td><span>Да</span></td>
+                                          <td><span>Харизма 18</span></td>
+                                       </tr>
+                                       <tr>
                                           <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Зелья/Настойка Выносливости.md" data-href="КТМС/Магические Предметы/Зелья/Настойка Выносливости.md" href="ктмс/магические-предметы/зелья/настойка-выносливости.html" class="internal-link" target="_self" rel="noopener nofollow">Настойка Выносливости</a></span></td>
                                           <td><span>Зелье</span></td>
                                           <td><span>Варьируется</span></td>
@@ -568,6 +673,20 @@
                                           <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Чудесные Предметы/Характеристики/Ожерелье С Чешуйками Тараска.md" data-href="КТМС/Магические Предметы/Чудесные Предметы/Характеристики/Ожерелье С Чешуйками Тараска.md" href="ктмс/магические-предметы/чудесные-предметы/характеристики/ожерелье-с-чешуйками-тараска.html" class="internal-link" target="_self" rel="noopener nofollow">Ожерелье С Чешуйками Тараска</a></span></td>
                                           <td><span>Чудесный Предмет</span></td>
                                           <td><span>Варьируется</span></td>
+                                          <td><span>Да</span></td>
+                                          <td><span>-</span></td>
+                                       </tr>
+                                       <tr>
+                                          <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Чудесные Предметы/Подпространство/Орихалковая Сумка.md" data-href="КТМС/Магические Предметы/Чудесные Предметы/Подпространство/Орихалковая Сумка.md" href="ктмс/магические-предметы/чудесные-предметы/подпространство/орихалковая-сумка.html" class="internal-link" target="_self" rel="noopener nofollow">Орихалковая Сумка</a></span></td>
+                                          <td><span>Чудесный Предмет</span></td>
+                                          <td><span>Артефакт</span></td>
+                                          <td><span>Необязательно</span></td>
+                                          <td><span>-</span></td>
+                                       </tr>
+                                       <tr>
+                                          <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Оружие/Орихалковые Перчатки Карателя.md" data-href="КТМС/Магические Предметы/Оружие/Орихалковые Перчатки Карателя.md" href="ктмс/магические-предметы/оружие/орихалковые-перчатки-карателя.html" class="internal-link" target="_self" rel="noopener nofollow">Орихалковые Перчатки Карателя</a></span></td>
+                                          <td><span>Оружие</span></td>
+                                          <td><span>Легендарный</span></td>
                                           <td><span>Да</span></td>
                                           <td><span>-</span></td>
                                        </tr>
@@ -586,6 +705,34 @@
                                           <td><span>-</span></td>
                                        </tr>
                                        <tr>
+                                          <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Чудесные Предметы/Перчатка Силы Йоун.md" data-href="КТМС/Магические Предметы/Чудесные Предметы/Перчатка Силы Йоун.md" href="ктмс/магические-предметы/чудесные-предметы/перчатка-силы-йоун.html" class="internal-link" target="_self" rel="noopener nofollow">Перчатка Силы Йоун</a></span></td>
+                                          <td><span>Чудесный Предмет</span></td>
+                                          <td><span>Легендарный</span></td>
+                                          <td><span>Да</span></td>
+                                          <td><span>Волшебник, Колдун, Чародей</span></td>
+                                       </tr>
+                                       <tr>
+                                          <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Чудесные Предметы/Перчатка Температурной Инверсии.md" data-href="КТМС/Магические Предметы/Чудесные Предметы/Перчатка Температурной Инверсии.md" href="ктмс/магические-предметы/чудесные-предметы/перчатка-температурной-инверсии.html" class="internal-link" target="_self" rel="noopener nofollow">Перчатка Температурной Инверсии</a></span></td>
+                                          <td><span>Чудесный Предмет</span></td>
+                                          <td><span>Редкий</span></td>
+                                          <td><span>Нет</span></td>
+                                          <td><span>-</span></td>
+                                       </tr>
+                                       <tr>
+                                          <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Чудесные Предметы/Пиджак Зацикливания.md" data-href="КТМС/Магические Предметы/Чудесные Предметы/Пиджак Зацикливания.md" href="ктмс/магические-предметы/чудесные-предметы/пиджак-зацикливания.html" class="internal-link" target="_self" rel="noopener nofollow">Пиджак Зацикливания</a></span></td>
+                                          <td><span>Чудесный Предмет</span></td>
+                                          <td><span>Очень Редкий</span></td>
+                                          <td><span>Нет</span></td>
+                                          <td><span>-</span></td>
+                                       </tr>
+                                       <tr>
+                                          <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Оружие/Пламенный Кнут Балора.md" data-href="КТМС/Магические Предметы/Оружие/Пламенный Кнут Балора.md" href="ктмс/магические-предметы/оружие/пламенный-кнут-балора.html" class="internal-link" target="_self" rel="noopener nofollow">Пламенный Кнут Балора</a></span></td>
+                                          <td><span>Оружие</span></td>
+                                          <td><span>Легендарный</span></td>
+                                          <td><span>Да</span></td>
+                                          <td><span>-</span></td>
+                                       </tr>
+                                       <tr>
                                           <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Чудесные Предметы/Плащ Временного Сдвига.md" data-href="КТМС/Магические Предметы/Чудесные Предметы/Плащ Временного Сдвига.md" href="ктмс/магические-предметы/чудесные-предметы/плащ-временного-сдвига.html" class="internal-link" target="_self" rel="noopener nofollow">Плащ Временного Сдвига</a></span></td>
                                           <td><span>Чудесный Предмет</span></td>
                                           <td><span>Редкий</span></td>
@@ -595,6 +742,27 @@
                                        <tr>
                                           <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Чудесные Предметы/Плащ Джокера.md" data-href="КТМС/Магические Предметы/Чудесные Предметы/Плащ Джокера.md" href="ктмс/магические-предметы/чудесные-предметы/плащ-джокера.html" class="internal-link" target="_self" rel="noopener nofollow">Плащ Джокера</a></span></td>
                                           <td><span>Чудесный Предмет</span></td>
+                                          <td><span>Очень Редкий</span></td>
+                                          <td><span>Нет</span></td>
+                                          <td><span>-</span></td>
+                                       </tr>
+                                       <tr>
+                                          <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Чудесные Предметы/Поножи Похоронного Марша.md" data-href="КТМС/Магические Предметы/Чудесные Предметы/Поножи Похоронного Марша.md" href="ктмс/магические-предметы/чудесные-предметы/поножи-похоронного-марша.html" class="internal-link" target="_self" rel="noopener nofollow">Поножи Похоронного Марша</a></span></td>
+                                          <td><span>Чудесный Предмет</span></td>
+                                          <td><span>Редкий</span></td>
+                                          <td><span>Нет</span></td>
+                                          <td><span>-</span></td>
+                                       </tr>
+                                       <tr>
+                                          <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Посохи/Посох Накопленного Заряда.md" data-href="КТМС/Магические Предметы/Посохи/Посох Накопленного Заряда.md" href="ктмс/магические-предметы/посохи/посох-накопленного-заряда.html" class="internal-link" target="_self" rel="noopener nofollow">Посох Накопленного Заряда</a></span></td>
+                                          <td><span>Посох</span></td>
+                                          <td><span>Очень Редкий</span></td>
+                                          <td><span>Да</span></td>
+                                          <td><span>Волшебник, Друид, Колдун, Чародей</span></td>
+                                       </tr>
+                                       <tr>
+                                          <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Посохи/Посох Силового Разряда.md" data-href="КТМС/Магические Предметы/Посохи/Посох Силового Разряда.md" href="ктмс/магические-предметы/посохи/посох-силового-разряда.html" class="internal-link" target="_self" rel="noopener nofollow">Посох Силового Разряда</a></span></td>
+                                          <td><span>Посох</span></td>
                                           <td><span>Очень Редкий</span></td>
                                           <td><span>Нет</span></td>
                                           <td><span>-</span></td>
@@ -635,11 +803,32 @@
                                           <td><span>-</span></td>
                                        </tr>
                                        <tr>
+                                          <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Чудесные Предметы/Привязь жизни.md" data-href="КТМС/Магические Предметы/Чудесные Предметы/Привязь жизни.md" href="ктмс/магические-предметы/чудесные-предметы/привязь-жизни.html" class="internal-link" target="_self" rel="noopener nofollow">Привязь жизни</a></span></td>
+                                          <td><span>Чудесный Предмет</span></td>
+                                          <td><span>Необычный</span></td>
+                                          <td><span>Нет</span></td>
+                                          <td><span>-</span></td>
+                                       </tr>
+                                       <tr>
+                                          <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Чудесные Предметы/Ремесленная Станция Инструментов.md" data-href="КТМС/Магические Предметы/Чудесные Предметы/Ремесленная Станция Инструментов.md" href="ктмс/магические-предметы/чудесные-предметы/ремесленная-станция-инструментов.html" class="internal-link" target="_self" rel="noopener nofollow">Ремесленная Станция Инструментов</a></span></td>
+                                          <td><span>Чудесный Предмет</span></td>
+                                          <td><span>Очень Редкий</span></td>
+                                          <td><span>Нет</span></td>
+                                          <td><span>-</span></td>
+                                       </tr>
+                                       <tr>
                                           <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Оружие/Ритуальный Клинок Крови.md" data-href="КТМС/Магические Предметы/Оружие/Ритуальный Клинок Крови.md" href="ктмс/магические-предметы/оружие/ритуальный-клинок-крови.html" class="internal-link" target="_self" rel="noopener nofollow">Ритуальный Клинок Крови</a></span></td>
                                           <td><span>Оружие</span></td>
                                           <td><span>Редкий</span></td>
                                           <td><span>Да</span></td>
                                           <td><span>Волшебник, Колдун, Чародей</span></td>
+                                       </tr>
+                                       <tr>
+                                          <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Протезы/Рука Арканомеха.md" data-href="КТМС/Магические Предметы/Протезы/Рука Арканомеха.md" href="ктмс/магические-предметы/протезы/рука-арканомеха.html" class="internal-link" target="_self" rel="noopener nofollow">Рука Арканомеха</a></span></td>
+                                          <td><span>Протез</span></td>
+                                          <td><span>Очень Редкий</span></td>
+                                          <td><span>Да</span></td>
+                                          <td><span>-</span></td>
                                        </tr>
                                        <tr>
                                           <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Чудесные Предметы/Характеристики/Рукавицы Силы Огра.md" data-href="КТМС/Магические Предметы/Чудесные Предметы/Характеристики/Рукавицы Силы Огра.md" href="ктмс/магические-предметы/чудесные-предметы/характеристики/рукавицы-силы-огра.html" class="internal-link" target="_self" rel="noopener nofollow">Рукавицы Силы Огра</a></span></td>
@@ -649,10 +838,45 @@
                                           <td><span>-</span></td>
                                        </tr>
                                        <tr>
+                                          <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Чудесные Предметы/Сапоги Похоронного Марша.md" data-href="КТМС/Магические Предметы/Чудесные Предметы/Сапоги Похоронного Марша.md" href="ктмс/магические-предметы/чудесные-предметы/сапоги-похоронного-марша.html" class="internal-link" target="_self" rel="noopener nofollow">Сапоги Похоронного Марша</a></span></td>
+                                          <td><span>Чудесный Предмет</span></td>
+                                          <td><span>Необычный</span></td>
+                                          <td><span>Нет</span></td>
+                                          <td><span>-</span></td>
+                                       </tr>
+                                       <tr>
                                           <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Зелья/Сверхчеловеческое Зелье Плетения.md" data-href="КТМС/Магические Предметы/Зелья/Сверхчеловеческое Зелье Плетения.md" href="ктмс/магические-предметы/зелья/сверхчеловеческое-зелье-плетения.html" class="internal-link" target="_self" rel="noopener nofollow">Сверхчеловеческое Зелье Плетения</a></span></td>
                                           <td><span>Зелье</span></td>
                                           <td><span>Очень Редкий</span></td>
                                           <td><span>Нет</span></td>
+                                          <td><span>-</span></td>
+                                       </tr>
+                                       <tr>
+                                          <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Чудесные Предметы/Священное писание Сириуса.md" data-href="КТМС/Магические Предметы/Чудесные Предметы/Священное писание Сириуса.md" href="ктмс/магические-предметы/чудесные-предметы/священное-писание-сириуса.html" class="internal-link" target="_self" rel="noopener nofollow">Священное писание Сириуса</a></span></td>
+                                          <td><span>Чудесный Предмет</span></td>
+                                          <td><span>Легендарный</span></td>
+                                          <td><span>Нет</span></td>
+                                          <td><span>-</span></td>
+                                       </tr>
+                                       <tr>
+                                          <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Посохи/Скипетр с черным сапфиром.md" data-href="КТМС/Магические Предметы/Посохи/Скипетр с черным сапфиром.md" href="ктмс/магические-предметы/посохи/скипетр-с-черным-сапфиром.html" class="internal-link" target="_self" rel="noopener nofollow">Скипетр с черным сапфиром</a></span></td>
+                                          <td><span>Посох</span></td>
+                                          <td><span>Легендарный</span></td>
+                                          <td><span>Да</span></td>
+                                          <td><span>-</span></td>
+                                       </tr>
+                                       <tr>
+                                          <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Оружие/Солнечный Серп Латандера +3.md" data-href="КТМС/Магические Предметы/Оружие/Солнечный Серп Латандера +3.md" href="ктмс/магические-предметы/оружие/солнечный-серп-латандера-+3.html" class="internal-link" target="_self" rel="noopener nofollow">Солнечный Серп Латандера +3</a></span></td>
+                                          <td><span>Оружие</span></td>
+                                          <td><span>Легендарный</span></td>
+                                          <td><span>Да</span></td>
+                                          <td><span>Заклинатель</span></td>
+                                       </tr>
+                                       <tr>
+                                          <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Чудесные Предметы/Сосуд для Искр.md" data-href="КТМС/Магические Предметы/Чудесные Предметы/Сосуд для Искр.md" href="ктмс/магические-предметы/чудесные-предметы/сосуд-для-искр.html" class="internal-link" target="_self" rel="noopener nofollow">Сосуд для Искр</a></span></td>
+                                          <td><span>Чудесный Предмет</span></td>
+                                          <td><span>Очень Редкий</span></td>
+                                          <td><span>Необязательно</span></td>
                                           <td><span>-</span></td>
                                        </tr>
                                        <tr>
@@ -677,10 +901,31 @@
                                           <td><span>-</span></td>
                                        </tr>
                                        <tr>
+                                          <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Чудесные Предметы/Сфера Пылающих Огней.md" data-href="КТМС/Магические Предметы/Чудесные Предметы/Сфера Пылающих Огней.md" href="ктмс/магические-предметы/чудесные-предметы/сфера-пылающих-огней.html" class="internal-link" target="_self" rel="noopener nofollow">Сфера Пылающих Огней</a></span></td>
+                                          <td><span>Чудесный Предмет</span></td>
+                                          <td><span>Редкий</span></td>
+                                          <td><span>Нет</span></td>
+                                          <td><span>-</span></td>
+                                       </tr>
+                                       <tr>
+                                          <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Оружие/Титановая Фальката.md" data-href="КТМС/Магические Предметы/Оружие/Титановая Фальката.md" href="ктмс/магические-предметы/оружие/титановая-фальката.html" class="internal-link" target="_self" rel="noopener nofollow">Титановая Фальката</a></span></td>
+                                          <td><span>Оружие</span></td>
+                                          <td><span>Нет</span></td>
+                                          <td><span>Нет</span></td>
+                                          <td><span>-</span></td>
+                                       </tr>
+                                       <tr>
                                           <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Оружие/Топор Резни Магнуса.md" data-href="КТМС/Магические Предметы/Оружие/Топор Резни Магнуса.md" href="ктмс/магические-предметы/оружие/топор-резни-магнуса.html" class="internal-link" target="_self" rel="noopener nofollow">Топор Резни Магнуса</a></span></td>
                                           <td><span>Оружие</span></td>
                                           <td><span>Очень Редкий</span></td>
                                           <td><span>Да</span></td>
+                                          <td><span>-</span></td>
+                                       </tr>
+                                       <tr>
+                                          <td><span><a data-tooltip-position="top" aria-label="КТМС/Магические Предметы/Чудесные Предметы/Шар Сжатой Слизи.md" data-href="КТМС/Магические Предметы/Чудесные Предметы/Шар Сжатой Слизи.md" href="ктмс/магические-предметы/чудесные-предметы/шар-сжатой-слизи.html" class="internal-link" target="_self" rel="noopener nofollow">Шар Сжатой Слизи</a></span></td>
+                                          <td><span>-</span></td>
+                                          <td><span>-</span></td>
+                                          <td><span>-</span></td>
                                           <td><span>-</span></td>
                                        </tr>
                                        <tr>
