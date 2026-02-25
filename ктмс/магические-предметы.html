@@ -40,272 +40,178 @@
    </head>
 	<!-- === ФИЛЬТРАЦИЯ ТАБЛИЦЫ === -->
 	<script>
-	(function() {
-	  // Флаг: инициализация уже прошла
-	  var initialized = false;
+	document.addEventListener("DOMContentLoaded", () => {
+	  const table = document.querySelector("table.dataview.table-view-table");
+	  if (!table) return;
 
-	  // ======================================================
-	  // Единственная точка входа — вызывается из разных мест
-	  // ======================================================
-	  function tryInit() {
-		if (initialized) return;
-		if (document.getElementById("table-filter-bar")) { initialized = true; return; }
+	  const tbody = table.querySelector("tbody.table-view-tbody");
+	  if (!tbody) return;
+	  const rows = Array.from(tbody.querySelectorAll("tr"));
+	  const totalCount = rows.length;
 
-		var table = document.querySelector("table.dataview.table-view-table");
-		if (!table) return;
-		if (!table.querySelector("tbody.table-view-tbody tr")) return;
-
-		initialized = true;
-		initFilters(table);
+	  // --- Собрать уникальные значения столбца ---
+	  function getUnique(colIndex) {
+		const set = new Set();
+		rows.forEach(r => {
+		  const td = r.querySelectorAll("td")[colIndex];
+		  if (td) {
+			const val = td.textContent.trim();
+			if (val && val !== "-") set.add(val);
+		  }
+		});
+		return [...set].sort();
 	  }
 
-	  // ======================================================
-	  // 1) Попробовать сразу (на случай если скрипт внизу страницы)
-	  // ======================================================
-	  tryInit();
+	  // --- Общие стили ---
+	  const inputCSS = `
+		padding: 6px 10px;
+		border: 1px solid var(--background-modifier-border, #444);
+		border-radius: 4px;
+		background: var(--background-secondary-alt, #2a2a2d);
+		color: var(--text-normal, #ddd);
+		font-size: 13px;
+		font-family: inherit;
+	  `;
+
+	  // --- Панель фильтров ---
+	  const bar = document.createElement("div");
+	  bar.id = "table-filter-bar";
+	  bar.style.cssText = `
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+		margin-bottom: 12px;
+		align-items: center;
+	  `;
+
+	  // Текстовый поиск по названию
+	  const search = document.createElement("input");
+	  search.type = "text";
+	  search.placeholder = "🔍 Поиск по названию…";
+	  search.style.cssText = inputCSS + "flex: 1 1 180px; min-width: 160px;";
+
+	  // Хелпер для <select>
+	  function makeSelect(placeholder, colIndex) {
+		const sel = document.createElement("select");
+		sel.style.cssText = inputCSS + "cursor: pointer;";
+		const def = document.createElement("option");
+		def.value = "";
+		def.textContent = placeholder;
+		sel.appendChild(def);
+		getUnique(colIndex).forEach(v => {
+		  const o = document.createElement("option");
+		  o.value = v;
+		  o.textContent = v;
+		  sel.appendChild(o);
+		});
+		return sel;
+	  }
+
+	  const selType   = makeSelect("— Тип —", 1);
+	  const selRarity = makeSelect("— Редкость —", 2);
+	  const selTune   = makeSelect("— Настройка —", 3);
 
 	  // ======================================================
-	  // 2) DOMContentLoaded — DOM построен, но картинки могут грузиться
+	  // Текстовый поиск по требованию (вместо выпадающего списка)
 	  // ======================================================
-	  document.addEventListener("DOMContentLoaded", function() {
-		tryInit();
-		// Запустить короткий поллинг после DOMContentLoaded
-		if (!initialized) startPolling();
+	  const searchReq = document.createElement("input");
+	  searchReq.type = "text";
+	  searchReq.placeholder = "🔍 Требование…";
+	  searchReq.style.cssText = inputCSS + "flex: 0 1 160px; min-width: 120px;";
+
+	  // Кнопка сброса
+	  const reset = document.createElement("button");
+	  reset.textContent = "✕";
+	  reset.title = "Сбросить фильтры";
+	  reset.style.cssText = `
+		padding: 6px 10px;
+		border: 1px solid var(--background-modifier-border, #444);
+		border-radius: 4px;
+		background: transparent;
+		color: var(--text-muted, #888);
+		font-size: 14px;
+		cursor: pointer;
+		line-height: 1;
+		transition: color .15s, border-color .15s;
+	  `;
+	  reset.addEventListener("mouseenter", () => {
+		reset.style.color = "var(--text-error, #e55)";
+		reset.style.borderColor = "var(--text-error, #e55)";
+	  });
+	  reset.addEventListener("mouseleave", () => {
+		reset.style.color = "var(--text-muted, #888)";
+		reset.style.borderColor = "var(--background-modifier-border, #444)";
 	  });
 
-	  // ======================================================
-	  // 3) window load — всё загружено полностью
-	  // ======================================================
-	  window.addEventListener("load", function() {
-		tryInit();
-		if (!initialized) startPolling();
+	  // Счётчик
+	  const counter = document.createElement("span");
+	  counter.style.cssText = `
+		color: var(--text-muted, #888);
+		font-size: 12px;
+		white-space: nowrap;
+	  `;
+	  counter.textContent = `Найдено: ${totalCount}`;
+
+	  // Заменили selReq на searchReq
+	  bar.append(search, selType, selRarity, selTune, searchReq, reset, counter);
+
+	  // Вставляем панель перед таблицей
+	  table.parentElement.insertBefore(bar, table);
+
+	  // --- Логика фильтрации ---
+	  function apply() {
+		const q  = search.value.toLowerCase().trim();
+		const ft = selType.value;
+		const fr = selRarity.value;
+		const fn = selTune.value;
+		// ---- текстовый поиск по требованию ----
+		const fq = searchReq.value.toLowerCase().trim();
+		let count = 0;
+
+		rows.forEach(row => {
+		  const cells = row.querySelectorAll("td");
+		  const name   = (cells[0]?.textContent || "").toLowerCase();
+		  const type   = (cells[1]?.textContent || "").trim();
+		  const rarity = (cells[2]?.textContent || "").trim();
+		  const tune   = (cells[3]?.textContent || "").trim();
+		  const req    = (cells[4]?.textContent || "").toLowerCase().trim();
+
+		  const ok =
+			(!q  || name.includes(q)) &&
+			(!ft || type   === ft) &&
+			(!fr || rarity === fr) &&
+			(!fn || tune   === fn) &&
+			(!fq || req.includes(fq));   // частичное совпадение
+
+		  row.style.display = ok ? "" : "none";
+		  if (ok) count++;
+		});
+
+		counter.textContent = `Найдено: ${count}`;
+
+		const hc = table.querySelector("th .dataview.small-text");
+		if (hc) hc.textContent = count;
+	  }
+
+	  // Сброс
+	  reset.addEventListener("click", () => {
+		search.value = "";
+		selType.value = "";
+		selRarity.value = "";
+		selTune.value = "";
+		searchReq.value = "";       // очищаем текстовое поле
+		apply();
+		const hc = table.querySelector("th .dataview.small-text");
+		if (hc) hc.textContent = totalCount;
 	  });
 
-	  // ======================================================
-	  // 4) MutationObserver — отслеживает появление таблицы
-	  //    (работает во всех современных браузерах, GitHub Pages ОК)
-	  // ======================================================
-	  if (typeof MutationObserver !== "undefined") {
-		var observer = new MutationObserver(function(mutations) {
-		  if (initialized) { observer.disconnect(); return; }
-		  for (var i = 0; i < mutations.length; i++) {
-			if (mutations[i].addedNodes.length > 0) {
-			  tryInit();
-			  if (initialized) { observer.disconnect(); return; }
-			}
-		  }
-		});
-
-		// Наблюдать как только document.body доступен
-		function startObserver() {
-		  if (document.body) {
-			observer.observe(document.body, { childList: true, subtree: true });
-		  } else {
-			document.addEventListener("DOMContentLoaded", function() {
-			  if (!initialized) {
-				observer.observe(document.body, { childList: true, subtree: true });
-			  }
-			});
-		  }
-		}
-		startObserver();
-	  }
-
-	  // ======================================================
-	  // 5) Поллинг как запасной вариант (до 15 сек)
-	  // ======================================================
-	  var pollingStarted = false;
-	  function startPolling() {
-		if (pollingStarted || initialized) return;
-		pollingStarted = true;
-		var attempts = 0;
-		var maxAttempts = 150; // 150 × 100ms = 15 сек
-		var timer = setInterval(function() {
-		  attempts++;
-		  tryInit();
-		  if (initialized || attempts >= maxAttempts) {
-			clearInterval(timer);
-		  }
-		}, 100);
-	  }
-
-	  // Запустить поллинг сразу на всякий случай
-	  startPolling();
-
-	  // ======================================================
-	  // Основная логика — запускается когда таблица готова
-	  // ======================================================
-	  function initFilters(table) {
-		// Двойная защита
-		if (document.getElementById("table-filter-bar")) return;
-
-		var tbody = table.querySelector("tbody.table-view-tbody");
-		if (!tbody) return;
-		var rows = Array.from(tbody.querySelectorAll("tr"));
-		var totalCount = rows.length;
-
-		// --- Собрать уникальные значения столбца ---
-		function getUnique(colIndex) {
-		  var set = new Set();
-		  rows.forEach(function(r) {
-			var td = r.querySelectorAll("td")[colIndex];
-			if (td) {
-			  var val = td.textContent.trim();
-			  if (val && val !== "-") set.add(val);
-			}
-		  });
-		  return Array.from(set).sort();
-		}
-
-		// --- Общие стили ---
-		var inputCSS =
-		  "padding: 6px 10px;" +
-		  "border: 1px solid var(--background-modifier-border, #444);" +
-		  "border-radius: 4px;" +
-		  "background: var(--background-secondary-alt, #2a2a2d);" +
-		  "color: var(--text-normal, #ddd);" +
-		  "font-size: 13px;" +
-		  "font-family: inherit;";
-
-		// --- Панель фильтров ---
-		var bar = document.createElement("div");
-		bar.id = "table-filter-bar";
-		bar.style.cssText =
-		  "display: flex;" +
-		  "flex-wrap: wrap;" +
-		  "gap: 8px;" +
-		  "margin-bottom: 12px;" +
-		  "align-items: center;";
-
-		// Текстовый поиск по названию
-		var search = document.createElement("input");
-		search.type = "text";
-		search.placeholder = "🔍 Поиск по названию…";
-		search.style.cssText = inputCSS + "flex: 1 1 180px; min-width: 160px;";
-
-		// Хелпер для <select>
-		function makeSelect(placeholder, colIndex) {
-		  var sel = document.createElement("select");
-		  sel.style.cssText = inputCSS + "cursor: pointer;";
-		  var def = document.createElement("option");
-		  def.value = "";
-		  def.textContent = placeholder;
-		  sel.appendChild(def);
-		  getUnique(colIndex).forEach(function(v) {
-			var o = document.createElement("option");
-			o.value = v;
-			o.textContent = v;
-			sel.appendChild(o);
-		  });
-		  return sel;
-		}
-
-		var selType   = makeSelect("— Тип —", 1);
-		var selRarity = makeSelect("— Редкость —", 2);
-		var selTune   = makeSelect("— Настройка —", 3);
-
-		// Текстовый поиск по требованию
-		var searchReq = document.createElement("input");
-		searchReq.type = "text";
-		searchReq.placeholder = "🔍 Требование…";
-		searchReq.style.cssText = inputCSS + "flex: 0 1 160px; min-width: 120px;";
-
-		// Кнопка сброса
-		var reset = document.createElement("button");
-		reset.textContent = "✕";
-		reset.title = "Сбросить фильтры";
-		reset.style.cssText =
-		  "padding: 6px 10px;" +
-		  "border: 1px solid var(--background-modifier-border, #444);" +
-		  "border-radius: 4px;" +
-		  "background: transparent;" +
-		  "color: var(--text-muted, #888);" +
-		  "font-size: 14px;" +
-		  "cursor: pointer;" +
-		  "line-height: 1;" +
-		  "transition: color .15s, border-color .15s;";
-		reset.addEventListener("mouseenter", function() {
-		  reset.style.color = "var(--text-error, #e55)";
-		  reset.style.borderColor = "var(--text-error, #e55)";
-		});
-		reset.addEventListener("mouseleave", function() {
-		  reset.style.color = "var(--text-muted, #888)";
-		  reset.style.borderColor = "var(--background-modifier-border, #444)";
-		});
-
-		// Счётчик
-		var counter = document.createElement("span");
-		counter.style.cssText =
-		  "color: var(--text-muted, #888);" +
-		  "font-size: 12px;" +
-		  "white-space: nowrap;";
-		counter.textContent = "Найдено: " + totalCount;
-
-		bar.appendChild(search);
-		bar.appendChild(selType);
-		bar.appendChild(selRarity);
-		bar.appendChild(selTune);
-		bar.appendChild(searchReq);
-		bar.appendChild(reset);
-		bar.appendChild(counter);
-
-		// Вставляем панель перед таблицей
-		table.parentElement.insertBefore(bar, table);
-
-		// --- Логика фильтрации ---
-		function apply() {
-		  var q  = search.value.toLowerCase().trim();
-		  var ft = selType.value;
-		  var fr = selRarity.value;
-		  var fn = selTune.value;
-		  var fq = searchReq.value.toLowerCase().trim();
-		  var count = 0;
-
-		  rows.forEach(function(row) {
-			var cells = row.querySelectorAll("td");
-			var name   = (cells[0] ? cells[0].textContent : "").toLowerCase();
-			var type   = (cells[1] ? cells[1].textContent : "").trim();
-			var rarity = (cells[2] ? cells[2].textContent : "").trim();
-			var tune   = (cells[3] ? cells[3].textContent : "").trim();
-			var req    = (cells[4] ? cells[4].textContent : "").toLowerCase().trim();
-
-			var ok =
-			  (!q  || name.includes(q)) &&
-			  (!ft || type   === ft) &&
-			  (!fr || rarity === fr) &&
-			  (!fn || tune   === fn) &&
-			  (!fq || req.includes(fq));
-
-			row.style.display = ok ? "" : "none";
-			if (ok) count++;
-		  });
-
-		  counter.textContent = "Найдено: " + count;
-
-		  var hc = table.querySelector("th .dataview.small-text");
-		  if (hc) hc.textContent = count;
-		}
-
-		// Сброс
-		reset.addEventListener("click", function() {
-		  search.value = "";
-		  selType.value = "";
-		  selRarity.value = "";
-		  selTune.value = "";
-		  searchReq.value = "";
-		  apply();
-		  var hc = table.querySelector("th .dataview.small-text");
-		  if (hc) hc.textContent = totalCount;
-		});
-
-		// Слушатели
-		search.addEventListener("input", apply);
-		selType.addEventListener("change", apply);
-		selRarity.addEventListener("change", apply);
-		selTune.addEventListener("change", apply);
-		searchReq.addEventListener("input", apply);
-	  }
-	})();
+	  // Слушатели
+	  search.addEventListener("input", apply);
+	  selType.addEventListener("change", apply);
+	  selRarity.addEventListener("change", apply);
+	  selTune.addEventListener("change", apply);
+	  searchReq.addEventListener("input", apply);  // input вместо change
+	});
 	</script>
    <body class="publish css-settings-manager mod-windows is-hidden-frameless styled-scrollbars show-inline-title show-ribbon sidebar-float-bottom check-color check-bg hr-no-icon slrvb-g is-focused">
       <script defer="">let theme=localStorage.getItem("theme")||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");"dark"==theme?(document.body.classList.add("theme-dark"),document.body.classList.remove("theme-light")):(document.body.classList.add("theme-light"),document.body.classList.remove("theme-dark")),window.innerWidth<480?document.body.classList.add("is-phone"):window.innerWidth<768?document.body.classList.add("is-tablet"):window.innerWidth<1024?document.body.classList.add("is-small-screen"):document.body.classList.add("is-large-screen")</script>
