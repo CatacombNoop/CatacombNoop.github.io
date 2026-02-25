@@ -783,21 +783,19 @@
                                        </tr>
                                     </tbody>
                                  </table>
-									<!-- === ФИЛЬТРАЦИЯ ТАБЛИЦЫ === -->
+								<!-- === ФИЛЬТРАЦИЯ И СОРТИРОВКА ТАБЛИЦЫ === -->
 								<script>
 								(function () {
-								  // ===== Защита от повторной инициализации =====
 								  const FILTER_ID = "table-filter-bar";
 
 								  function initTableFilter() {
-									// Если панель уже существует — удаляем старую и пересоздаём
-									// (таблица могла перерисоваться, а панель — остаться мёртвой)
 									const old = document.getElementById(FILTER_ID);
 									if (old) old.remove();
 
 									const table = document.querySelector("table.dataview.table-view-table");
 									if (!table) return;
 
+									const thead = table.querySelector("thead");
 									const tbody = table.querySelector("tbody.table-view-tbody");
 									if (!tbody) return;
 
@@ -805,7 +803,160 @@
 									const totalCount = rows.length;
 									if (totalCount === 0) return;
 
-									// --- Собрать уникальные значения столбца ---
+									// =============================================
+									//  Сохраняем исходный порядок строк
+									// =============================================
+									const originalOrder = rows.slice();
+
+									// =============================================
+									//  Карта порядка редкости (для умной сортировки)
+									// =============================================
+									const rarityOrder = {
+									  "обычный":       0,
+									  "обычная":       0,
+									  "обычное":       0,
+									  "common":        0,
+									  "необычный":     1,
+									  "необычная":     1,
+									  "необычное":     1,
+									  "uncommon":      1,
+									  "редкий":        2,
+									  "редкая":        2,
+									  "редкое":        2,
+									  "rare":          2,
+									  "очень редкий":  3,
+									  "очень редкая":  3,
+									  "очень редкое":  3,
+									  "very rare":     3,
+									  "легендарный":   4,
+									  "легендарная":   4,
+									  "легендарное":   4,
+									  "legendary":     4,
+									  "артефакт":      5,
+									  "artifact":      5,
+									};
+
+									// =============================================
+									//  Состояние сортировки
+									// =============================================
+									let sortCol = -1;     // текущий столбец сортировки
+									let sortDir = 0;      // 0 = нет, 1 = по возрастанию, -1 = по убыванию
+									const RARITY_COL = 2; // индекс столбца «Редкость»
+
+									// =============================================
+									//  Функция сортировки
+									// =============================================
+									function sortTable(colIndex) {
+									  // Определяем направление
+									  if (sortCol === colIndex) {
+										// Тот же столбец: asc → desc → сброс
+										if (sortDir === 1) sortDir = -1;
+										else if (sortDir === -1) { sortDir = 0; sortCol = -1; }
+										else sortDir = 1;
+									  } else {
+										sortCol = colIndex;
+										sortDir = 1;
+									  }
+
+									  let sorted;
+
+									  if (sortDir === 0) {
+										// Возврат к исходному порядку
+										sorted = originalOrder.slice();
+									  } else {
+										sorted = rows.slice().sort((a, b) => {
+										  const cellA = a.querySelectorAll("td")[colIndex];
+										  const cellB = b.querySelectorAll("td")[colIndex];
+										  const valA = (cellA?.textContent || "").trim();
+										  const valB = (cellB?.textContent || "").trim();
+
+										  let cmp;
+
+										  if (colIndex === RARITY_COL) {
+											// Сортировка по карте редкости
+											const rA = rarityOrder[valA.toLowerCase()] ?? 999;
+											const rB = rarityOrder[valB.toLowerCase()] ?? 999;
+											cmp = rA - rB;
+										  } else {
+											// Обычная текстовая сортировка (с учётом локали)
+											cmp = valA.localeCompare(valB, "ru", { sensitivity: "base", numeric: true });
+										  }
+
+										  return cmp * sortDir;
+										});
+									  }
+
+									  // Перерисовываем строки
+									  sorted.forEach(row => tbody.appendChild(row));
+
+									  // Обновляем индикаторы в шапке
+									  updateSortIndicators();
+									}
+
+									// =============================================
+									//  Индикаторы сортировки в заголовках
+									// =============================================
+									function updateSortIndicators() {
+									  if (!thead) return;
+									  const ths = thead.querySelectorAll("th");
+									  ths.forEach((th, i) => {
+										// Удаляем старый индикатор
+										const oldIcon = th.querySelector(".sort-icon");
+										if (oldIcon) oldIcon.remove();
+
+										// Добавляем новый
+										const icon = document.createElement("span");
+										icon.className = "sort-icon";
+										icon.style.cssText = `
+										  margin-left: 4px;
+										  font-size: 11px;
+										  opacity: 0.5;
+										  user-select: none;
+										`;
+
+										if (i === sortCol) {
+										  icon.textContent = sortDir === 1 ? " ▲" : sortDir === -1 ? " ▼" : " ⇅";
+										  icon.style.opacity = "1";
+										} else {
+										  icon.textContent = " ⇅";
+										}
+
+										th.appendChild(icon);
+									  });
+									}
+
+									// =============================================
+									//  Навешиваем клик на заголовки
+									// =============================================
+									if (thead) {
+									  const ths = thead.querySelectorAll("th");
+									  ths.forEach((th, i) => {
+										th.style.cursor = "pointer";
+										th.style.userSelect = "none";
+										th.title = "Нажмите для сортировки";
+
+										// Ховер-эффект
+										th.addEventListener("mouseenter", () => {
+										  th.style.background = "var(--background-modifier-hover, rgba(255,255,255,0.05))";
+										});
+										th.addEventListener("mouseleave", () => {
+										  th.style.background = "";
+										});
+
+										th.addEventListener("click", (e) => {
+										  // Не сортируем, если кликнули по ссылке внутри th
+										  if (e.target.tagName === "A") return;
+										  sortTable(i);
+										});
+									  });
+
+									  // Начальные индикаторы
+									  updateSortIndicators();
+									}
+
+									// =============================================
+									//  Уникальные значения столбца
+									// =============================================
 									function getUnique(colIndex) {
 									  const set = new Set();
 									  rows.forEach(r => {
@@ -818,7 +969,9 @@
 									  return [...set].sort();
 									}
 
-									// --- Общие стили ---
+									// =============================================
+									//  Общие стили
+									// =============================================
 									const inputCSS = `
 									  padding: 6px 10px;
 									  border: 1px solid var(--background-modifier-border, #444);
@@ -829,7 +982,9 @@
 									  font-family: inherit;
 									`;
 
-									// --- Панель фильтров ---
+									// =============================================
+									//  Панель фильтров
+									// =============================================
 									const bar = document.createElement("div");
 									bar.id = FILTER_ID;
 									bar.style.cssText = `
@@ -876,7 +1031,7 @@
 									// Кнопка сброса
 									const reset = document.createElement("button");
 									reset.textContent = "✕";
-									reset.title = "Сбросить фильтры";
+									reset.title = "Сбросить фильтры и сортировку";
 									reset.style.cssText = `
 									  padding: 6px 10px;
 									  border: 1px solid var(--background-modifier-border, #444);
@@ -911,7 +1066,9 @@
 									// Вставляем панель перед таблицей
 									table.parentElement.insertBefore(bar, table);
 
-									// --- Логика фильтрации ---
+									// =============================================
+									//  Логика фильтрации
+									// =============================================
 									function apply() {
 									  const q  = search.value.toLowerCase().trim();
 									  const ft = selType.value;
@@ -945,19 +1102,28 @@
 									  if (hc) hc.textContent = count;
 									}
 
-									// Сброс
+									// =============================================
+									//  Сброс фильтров + сортировки
+									// =============================================
 									reset.addEventListener("click", () => {
 									  search.value    = "";
 									  selType.value   = "";
 									  selRarity.value = "";
 									  selTune.value   = "";
 									  searchReq.value = "";
+
+									  // Сброс сортировки
+									  sortCol = -1;
+									  sortDir = 0;
+									  originalOrder.forEach(row => tbody.appendChild(row));
+									  updateSortIndicators();
+
 									  apply();
 									  const hc = table.querySelector("th .dataview.small-text");
 									  if (hc) hc.textContent = totalCount;
 									});
 
-									// Слушатели
+									// Слушатели фильтров
 									search.addEventListener("input", apply);
 									selType.addEventListener("change", apply);
 									selRarity.addEventListener("change", apply);
@@ -966,57 +1132,40 @@
 								  }
 
 								  // ===================================================
-								  //  1. Первоначальная загрузка
+								  //  Инициализация при разных сценариях загрузки
 								  // ===================================================
+
+								  // 1. Первоначальная загрузка
 								  if (document.readyState === "loading") {
 									document.addEventListener("DOMContentLoaded", initTableFilter);
 								  } else {
-									// DOM уже готов (скрипт выполнился позже)
 									initTableFilter();
 								  }
 
-								  // ===================================================
-								  //  2. Возврат из bfcache (кнопка «Назад» в браузере)
-								  // ===================================================
+								  // 2. Возврат из bfcache
 								  window.addEventListener("pageshow", function (event) {
-									if (event.persisted) {
-									  initTableFilter();
-									}
+									if (event.persisted) initTableFilter();
 								  });
 
-								  // ===================================================
-								  //  3. SPA-навигация / popstate (History API)
-								  // ===================================================
+								  // 3. SPA-навигация
 								  window.addEventListener("popstate", function () {
-									// Небольшая задержка — дать контенту отрисоваться
 									setTimeout(initTableFilter, 100);
 								  });
 
-								  // ===================================================
-								  //  4. MutationObserver — если контент подгружается
-								  //     динамически (AJAX / fetch / framework)
-								  // ===================================================
+								  // 4. Динамическая подгрузка контента
 								  let observerTimer = null;
 								  const observer = new MutationObserver(function () {
-									// Таблица появилась, а панели ещё нет
-									const tableExists = document.querySelector(
-									  "table.dataview.table-view-table"
-									);
-									const barExists = document.getElementById(FILTER_ID);
-
+									const tableExists = document.querySelector("table.dataview.table-view-table");
+									const barExists   = document.getElementById(FILTER_ID);
 									if (tableExists && !barExists) {
-									  // Дебаунс: ждём 200 мс после последней мутации
 									  clearTimeout(observerTimer);
 									  observerTimer = setTimeout(initTableFilter, 200);
 									}
 								  });
+								  observer.observe(document.body, { childList: true, subtree: true });
 
-								  observer.observe(document.body, {
-									childList: true,
-									subtree: true,
-								  });
 								})();
-								</script> 
+								</script>
                               </div>
                            </div>
                         </div>
