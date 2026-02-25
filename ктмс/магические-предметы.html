@@ -41,24 +41,36 @@
 	<!-- === ФИЛЬТРАЦИЯ ТАБЛИЦЫ === -->
 	<script>
 	(function() {
-	  const FILTER_ID = "table-filter-bar";
+	  // Защита от повторной инициализации
+	  if (document.getElementById("table-filter-bar")) return;
 
-	  function initFilters() {
-		// Если фильтр уже есть и подключён — выходим
-		const existingBar = document.getElementById(FILTER_ID);
-		if (existingBar && existingBar.isConnected) return true;
-		if (existingBar) existingBar.remove();
+	  // ======================================================
+	  // Ждём появления таблицы Dataview (до 10 секунд)
+	  // ======================================================
+	  let attempts = 0;
+	  const maxAttempts = 100; // 100 × 100ms = 10 сек
 
-		// Ищем таблицу Dataview
+	  const waitForTable = setInterval(() => {
+		attempts++;
 		const table = document.querySelector("table.dataview.table-view-table");
-		if (!table) return false;
+		if (table && table.querySelector("tbody.table-view-tbody tr")) {
+		  clearInterval(waitForTable);
+		  initFilters(table);
+		} else if (attempts >= maxAttempts) {
+		  clearInterval(waitForTable);
+		}
+	  }, 100);
+
+	  // ======================================================
+	  // Основная логика — запускается когда таблица готова
+	  // ======================================================
+	  function initFilters(table) {
+		// Защита от повторного запуска
+		if (document.getElementById("table-filter-bar")) return;
 
 		const tbody = table.querySelector("tbody.table-view-tbody");
-		if (!tbody) return false;
-
+		if (!tbody) return;
 		const rows = Array.from(tbody.querySelectorAll("tr"));
-		if (rows.length === 0) return false;
-
 		const totalCount = rows.length;
 
 		// --- Собрать уникальные значения столбца ---
@@ -87,7 +99,7 @@
 
 		// --- Панель фильтров ---
 		const bar = document.createElement("div");
-		bar.id = FILTER_ID;
+		bar.id = "table-filter-bar";
 		bar.style.cssText = `
 		  display: flex;
 		  flex-wrap: wrap;
@@ -96,7 +108,7 @@
 		  align-items: center;
 		`;
 
-		// Поиск по названию
+		// Текстовый поиск по названию
 		const search = document.createElement("input");
 		search.type = "text";
 		search.placeholder = "🔍 Поиск по названию…";
@@ -163,6 +175,8 @@
 		counter.textContent = `Найдено: ${totalCount}`;
 
 		bar.append(search, selType, selRarity, selTune, searchReq, reset, counter);
+
+		// Вставляем панель перед таблицей
 		table.parentElement.insertBefore(bar, table);
 
 		// --- Логика фильтрации ---
@@ -194,10 +208,12 @@
 		  });
 
 		  counter.textContent = `Найдено: ${count}`;
+
 		  const hc = table.querySelector("th .dataview.small-text");
 		  if (hc) hc.textContent = count;
 		}
 
+		// Сброс
 		reset.addEventListener("click", () => {
 		  search.value = "";
 		  selType.value = "";
@@ -209,45 +225,13 @@
 		  if (hc) hc.textContent = totalCount;
 		});
 
+		// Слушатели
 		search.addEventListener("input", apply);
 		selType.addEventListener("change", apply);
 		selRarity.addEventListener("change", apply);
 		selTune.addEventListener("change", apply);
 		searchReq.addEventListener("input", apply);
-
-		return true; // успешно
 	  }
-
-	  // ======================================================
-	  // Стратегия запуска: 3 способа одновременно
-	  // ======================================================
-
-	  // 1) Попробовать сразу
-	  if (initFilters()) return;
-
-	  // 2) MutationObserver — ловит момент появления таблицы
-	  const observer = new MutationObserver(() => {
-		if (initFilters()) {
-		  observer.disconnect();
-		}
-	  });
-	  observer.observe(document.body, {
-		childList: true,
-		subtree: true
-	  });
-
-	  // 3) Страховочные таймеры на случай пропуска мутации
-	  [300, 800, 1500, 3000, 5000, 8000].forEach(ms => {
-		setTimeout(() => {
-		  if (initFilters()) {
-			observer.disconnect();
-		  }
-		}, ms);
-	  });
-
-	  // 4) Отключить observer через 30 сек чтобы не висел вечно
-	  setTimeout(() => observer.disconnect(), 30000);
-
 	})();
 	</script>
    <body class="publish css-settings-manager mod-windows is-hidden-frameless styled-scrollbars show-inline-title show-ribbon sidebar-float-bottom check-color check-bg hr-no-icon slrvb-g is-focused">
