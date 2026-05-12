@@ -19,6 +19,7 @@
 
     const originalOrder = rows.slice();
 
+    // Индексы колонок (Ритуал добавлен перед Особое)
     const COL_NAME = 0;
     const COL_LEVEL = 1;
     const COL_SCHOOL = 2;
@@ -26,8 +27,9 @@
     const COL_COMPONENTS = 4;
     const COL_DURATION = 5;
     const COL_CONCENTRATION = 6;
-    const COL_SPECIAL = 7;
-    const COL_SOURCE = 8;
+    const COL_RITUAL = 7;      // Новая колонка
+    const COL_SPECIAL = 8;
+    const COL_SOURCE = 9;
 
     let sortCol = -1;
     let sortDir = 0;
@@ -49,8 +51,7 @@
       return (row.querySelectorAll("td")[i]?.textContent || "").trim();
     }
 
-    // Новая функция: получение значений из span с определёнными классами
-    // Для колонок Особое и Сборник - ищем все span с классами school-text-box, school2-text-box, ritual-text-box
+    // Функция: получение значений из span с определёнными классами
     function getSpecialSpanValues(row, colIndex) {
       const cell = row.querySelectorAll("td")[colIndex];
       if (!cell) return [];
@@ -83,8 +84,12 @@
     }
 
     // Получение первого значения из специальных span (для сортировки)
-    function firstSpecialSpanValue(row, colIndex) {
+    function firstSpecialSpanValue(row, colIndex, filterType = null) {
       const values = getSpecialSpanValues(row, colIndex);
+      if (filterType === "ritual") {
+        // Для ритуала: возвращаем специальное значение если ритуала нет
+        return values.length > 0 ? values[0] : "(Без ритуала)";
+      }
       return values.length > 0 ? values[0] : cellText(row, colIndex);
     }
 
@@ -119,12 +124,10 @@
     }
 
     // Получение уникальных значений для столбца
-    // useSpecialSpans = true для COL_SPECIAL и COL_SOURCE
     function getUnique(colIndex, useSpecialSpans = false, splitter = null) {
       const set = new Set();
       rows.forEach(row => {
         if (useSpecialSpans) {
-          // Для колонок Особое и Сборник - получаем все значения из специальных span
           const spanValues = getSpecialSpanValues(row, colIndex);
           spanValues.forEach(v => {
             if (v && v !== "-") set.add(v);
@@ -161,15 +164,15 @@
         sorted = originalOrder.slice();
       } else {
         // Определяем, нужно ли использовать специальные span для этого столбца
-        const useSpecialSpans = (colIndex === COL_SPECIAL || colIndex === COL_SOURCE);
+        const useSpecialSpans = (colIndex === COL_RITUAL || colIndex === COL_SPECIAL || colIndex === COL_SOURCE);
+        const filterType = colIndex === COL_RITUAL ? "ritual" : null;
         
         sorted = rows.slice().sort((a, b) => {
           let valA, valB;
           
           if (useSpecialSpans) {
-            // Для столбцов Особое и Сборник используем значения из special span
-            valA = firstSpecialSpanValue(a, colIndex);
-            valB = firstSpecialSpanValue(b, colIndex);
+            valA = firstSpecialSpanValue(a, colIndex, filterType);
+            valB = firstSpecialSpanValue(b, colIndex, filterType);
           } else {
             valA = cellText(a, colIndex);
             valB = cellText(b, colIndex);
@@ -282,11 +285,13 @@
     search.placeholder = "🔍 Заклинание…";
     search.style.cssText = inputCSS + "flex:1 1 180px;min-width:160px;";
 
-    // Для Особое и Сборника используем getUnique с useSpecialSpans = true
+    // Селекты для фильтров
     const selLevel = makeSelect("— Уровень —", getUnique(COL_LEVEL));
     const selSchool = makeSelect("— Школа —", getUnique(COL_SCHOOL));
     const selTime = makeSelect("— Время —", timeOptions);
     const selConc = makeSelect("— Концентрация —", getUnique(COL_CONCENTRATION));
+    // Новые фильтры для колонок со special spans
+    const selRitual = makeSelect("— Ритуал —", ["(Без ритуала)", ...getUnique(COL_RITUAL, true)]);
     const selSpecial = makeSelect("— Особое —", getUnique(COL_SPECIAL, true));
     const selSource = makeSelect("— Сборник —", getUnique(COL_SOURCE, true));
 
@@ -325,7 +330,8 @@
     counter.style.cssText = "color:var(--text-muted,#888);font-size:12px;white-space:nowrap;";
     counter.textContent = `Найдено: ${totalCount}`;
 
-    bar.append(search, selLevel, selSchool, selTime, compBox, selConc, selSpecial, selSource, reset, counter);
+    // Добавляем все элементы в панель (Ритуал после Концентрации)
+    bar.append(search, selLevel, selSchool, selTime, compBox, selConc, selRitual, selSpecial, selSource, reset, counter);
     table.parentElement.insertBefore(bar, table);
 
     function apply() {
@@ -334,6 +340,7 @@
       const school = selSchool.value;
       const time = selTime.value;
       const conc = selConc.value;
+      const ritual = selRitual.value;
       const special = selSpecial.value;
       const source = selSource.value;
       const neededComps = Object.values(compChecks).filter(c => c.checked).map(c => c.value);
@@ -348,9 +355,14 @@
         const rowComps = getComponents(cellText(row, COL_COMPONENTS));
         const rowConc = cellText(row, COL_CONCENTRATION);
         
-        // Получаем все значения из special span для Особое и Сборника
+        // Получаем все значения из special span для Ритуала, Особое и Сборника
+        const rowRitual = getSpecialSpanValues(row, COL_RITUAL);
         const rowSpecial = getSpecialSpanValues(row, COL_SPECIAL);
         const rowSource = getSpecialSpanValues(row, COL_SOURCE);
+        
+        // Проверка для фильтра "Без ритуала"
+        const hasRitual = rowRitual.length > 0;
+        const ritualFilterOk = !ritual || (ritual === "(Без ритуала)" ? !hasRitual : rowRitual.includes(ritual));
 
         const ok =
           (!q || name.includes(q)) &&
@@ -358,7 +370,7 @@
           (!school || rowSchool === school) &&
           (!time || rowTime.includes(time)) &&
           (!conc || rowConc === conc) &&
-          // Фильтрация: показываем строку если выбранное значение содержится в любом из special span
+          ritualFilterOk &&
           (!special || rowSpecial.includes(special)) &&
           (!source || rowSource.includes(source)) &&
           neededComps.every(c => rowComps.includes(c));
@@ -379,6 +391,7 @@
       selSchool.value = "";
       selTime.value = "";
       selConc.value = "";
+      selRitual.value = "";
       selSpecial.value = "";
       selSource.value = "";
       Object.values(compChecks).forEach(c => c.checked = false);
@@ -393,7 +406,8 @@
       if (hc) hc.textContent = totalCount;
     });
 
-    [search, selLevel, selSchool, selTime, selConc, selSpecial, selSource].forEach(el => {
+    // Добавляем слушатели событий для всех селектов
+    [search, selLevel, selSchool, selTime, selConc, selRitual, selSpecial, selSource].forEach(el => {
       el.addEventListener(el.tagName === "INPUT" ? "input" : "change", apply);
     });
 
