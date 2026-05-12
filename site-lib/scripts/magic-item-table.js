@@ -5,6 +5,9 @@
   function initTableFilter() {
 	const old = document.getElementById(FILTER_ID);
 	if (old) old.remove();
+	
+	var path = window.location.pathname;
+	if !(path.includes("магические-предметы.html")) return;
 
 	const table = document.querySelector("table.dataview.table-view-table");
 	if (!table) return;
