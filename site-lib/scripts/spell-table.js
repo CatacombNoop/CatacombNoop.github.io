@@ -46,6 +46,27 @@
       return (row.querySelectorAll("td")[i]?.textContent || "").trim();
     }
 
+    // Новая функция: получение всех значений из вложенных <span> для указанного столбца
+    function getSpanValues(row, colIndex) {
+      const cell = row.querySelectorAll("td")[colIndex];
+      if (!cell) return [];
+      
+      const spans = cell.querySelectorAll(":scope > span");
+      if (spans.length === 0) {
+        // Если нет прямых дочерних span, пробуем получить все span внутри
+        const allSpans = cell.querySelectorAll("span");
+        return Array.from(allSpans).map(s => s.textContent.trim()).filter(Boolean);
+      }
+      
+      return Array.from(spans).map(s => s.textContent.trim()).filter(Boolean);
+    }
+
+    // Получение первого значения из span (для отображения в фильтрах)
+    function firstSpanValue(row, colIndex) {
+      const values = getSpanValues(row, colIndex);
+      return values.length > 0 ? values[0] : cellText(row, colIndex);
+    }
+
     function normalizeTime(value) {
       const v = value.toLowerCase();
       const out = [];
@@ -76,16 +97,38 @@
         .filter(Boolean);
     }
 
-    function getUnique(colIndex, splitter) {
+    function getUnique(colIndex, useSpanValues = false, splitter = null) {
       const set = new Set();
       rows.forEach(row => {
-        const val = cellText(row, colIndex);
-        const values = splitter ? splitter(val) : [val];
-        values.forEach(v => {
-          if (v && v !== "-") set.add(v);
-        });
+        if (useSpanValues) {
+          // Для колонок Особое и Сборник - получаем все значения из span
+          const spanValues = getSpanValues(row, colIndex);
+          spanValues.forEach(v => {
+            if (v && v !== "-") set.add(v);
+          });
+        } else if (splitter) {
+          const val = cellText(row, colIndex);
+          const values = splitter(val);
+          values.forEach(v => {
+            if (v && v !== "-") set.add(v);
+          });
+        } else {
+          const val = cellText(row, colIndex);
+          if (val && val !== "-") set.add(val);
+        }
       });
       return [...set].sort((a, b) => a.localeCompare(b, "ru", { sensitivity: "base", numeric: true }));
+    }
+
+    // Функция сравнения для сортировки с учетом span значений
+    function compareCellValues(valA, valB, colIndex, useSpanValues) {
+      if (useSpanValues) {
+        // Для столбцов с span - сравниваем по первому значению
+        const spanA = getSpanValues(rows.find(r => cellText(r, colIndex) === valA), colIndex);
+        const spanB = getSpanValues(rows.find(r => cellText(r, colIndex) === valB), colIndex);
+        return (spanA[0] || valA).localeCompare(spanB[0] || valB, "ru", { sensitivity: "base", numeric: true });
+      }
+      return valA.localeCompare(valB, "ru", { sensitivity: "base", numeric: true });
     }
 
     function sortTable(colIndex) {
@@ -106,8 +149,21 @@
         sorted = originalOrder.slice();
       } else {
         sorted = rows.slice().sort((a, b) => {
-          const valA = cellText(a, colIndex);
-          const valB = cellText(b, colIndex);
+          let valA, valB;
+          
+          // Для столбцов Особое и Сборник используем значения из span
+          const useSpanValues = (colIndex === COL_SPECIAL || colIndex === COL_SOURCE);
+          
+          if (useSpanValues) {
+            const spansA = getSpanValues(a, colIndex);
+            const spansB = getSpanValues(b, colIndex);
+            valA = spansA.length > 0 ? spansA[0] : cellText(a, colIndex);
+            valB = spansB.length > 0 ? spansB[0] : cellText(b, colIndex);
+          } else {
+            valA = cellText(a, colIndex);
+            valB = cellText(b, colIndex);
+          }
+          
           let cmp;
 
           if (colIndex === COL_LEVEL) {
@@ -115,6 +171,9 @@
           } else if (colIndex === COL_TIME) {
             cmp = timeSortRank(valA) - timeSortRank(valB);
             if (!cmp) cmp = valA.localeCompare(valB, "ru", { sensitivity: "base", numeric: true });
+          } else if (colIndex === COL_SPECIAL || colIndex === COL_SOURCE) {
+            // Сортировка по первому значению из span
+            cmp = valA.localeCompare(valB, "ru", { sensitivity: "base", numeric: true });
           } else {
             cmp = valA.localeCompare(valB, "ru", { sensitivity: "base", numeric: true });
           }
@@ -215,12 +274,13 @@
     search.placeholder = "🔍 Заклинание…";
     search.style.cssText = inputCSS + "flex:1 1 180px;min-width:160px;";
 
+    // Для Особое и Сборника используем getUnique с useSpanValues = true
     const selLevel = makeSelect("— Уровень —", getUnique(COL_LEVEL));
     const selSchool = makeSelect("— Школа —", getUnique(COL_SCHOOL));
     const selTime = makeSelect("— Время —", timeOptions);
     const selConc = makeSelect("— Концентрация —", getUnique(COL_CONCENTRATION));
-    const selSpecial = makeSelect("— Особое —", getUnique(COL_SPECIAL, splitValues));
-    const selSource = makeSelect("— Сборник —", getUnique(COL_SOURCE));
+    const selSpecial = makeSelect("— Особое —", getUnique(COL_SPECIAL, true));
+    const selSource = makeSelect("— Сборник —", getUnique(COL_SOURCE, true));
 
     const compBox = document.createElement("div");
     compBox.style.cssText = "display:flex;gap:6px;align-items:center;";
@@ -279,8 +339,10 @@
         const rowTime = normalizeTime(cellText(row, COL_TIME));
         const rowComps = getComponents(cellText(row, COL_COMPONENTS));
         const rowConc = cellText(row, COL_CONCENTRATION);
-        const rowSpecial = splitValues(cellText(row, COL_SPECIAL));
-        const rowSource = cellText(row, COL_SOURCE);
+        
+        // Получаем все значения из span для Особое и Сборника
+        const rowSpecial = getSpanValues(row, COL_SPECIAL);
+        const rowSource = getSpanValues(row, COL_SOURCE);
 
         const ok =
           (!q || name.includes(q)) &&
@@ -289,7 +351,7 @@
           (!time || rowTime.includes(time)) &&
           (!conc || rowConc === conc) &&
           (!special || rowSpecial.includes(special)) &&
-          (!source || rowSource === source) &&
+          (!source || rowSource.includes(source)) &&
           neededComps.every(c => rowComps.includes(c));
 
         row.style.display = ok ? "" : "none";
