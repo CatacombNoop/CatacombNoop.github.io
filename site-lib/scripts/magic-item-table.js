@@ -360,27 +360,4 @@
 	initTableFilter();
   }
 
-  // 2. Возврат из bfcache
-  /*
-  window.addEventListener("pageshow", function (event) {
-	if (event.persisted) initTableFilter();
-  });
-
-  // 3. SPA-навигация
-  window.addEventListener("popstate", function () {
-	setTimeout(initTableFilter, 100);
-  });
-
-  // 4. Динамическая подгрузка контента
-  let observerTimer = null;
-  const observer = new MutationObserver(function () {
-	const tableExists = document.querySelector("table.dataview.table-view-table");
-	const barExists   = document.getElementById(FILTER_ID);
-	if (tableExists && !barExists) {
-	  clearTimeout(observerTimer);
-	  observerTimer = setTimeout(initTableFilter, 200);
-	}
-  });
-  observer.observe(document.body, { childList: true, subtree: true });*/
-
 })();
