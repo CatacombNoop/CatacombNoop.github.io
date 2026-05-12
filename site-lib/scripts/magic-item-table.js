@@ -1,5 +1,4 @@
 <!-- === ФИЛЬТРАЦИЯ И СОРТИРОВКА ТАБЛИЦЫ === -->
-<script>
 (function () {
   const FILTER_ID = "table-filter-bar";
 
@@ -384,4 +383,3 @@
   observer.observe(document.body, { childList: true, subtree: true });
 
 })();
-</script>
