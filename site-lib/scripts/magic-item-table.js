@@ -352,7 +352,7 @@
   // ===================================================
   //  Инициализация при разных сценариях загрузки
   // ===================================================
-	/*
+	
   // 1. Первоначальная загрузка
   if (document.readyState === "loading") {
 	document.addEventListener("DOMContentLoaded", initTableFilter);
@@ -361,6 +361,7 @@
   }
 
   // 2. Возврат из bfcache
+  /*
   window.addEventListener("pageshow", function (event) {
 	if (event.persisted) initTableFilter();
   });
