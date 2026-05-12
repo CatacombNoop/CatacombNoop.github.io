@@ -50,9 +50,9 @@
       const v = value.toLowerCase();
       const out = [];
 
-      if (/\bреакц/.test(v)) out.push("Реакция");
+      if (/\реакц/.test(v)) out.push("Реакция");
       if (/бонусн/.test(v)) out.push("Бонусное Действие");
-      else if (/\bдейств/.test(v)) out.push("Действие");
+      else if (/\действ/.test(v)) out.push("Действие");
 
       if (/минут/.test(v)) out.push("Минуты");
       if (/час/.test(v)) out.push("Часы");
