@@ -3,7 +3,7 @@
   const FILTER_ID = "table-filter-bar";
   
   var path = window.location.pathname;
-  if !(path.includes("магические-предметы.html")) return;   	
+  if (!path.includes("магические-предметы.html")) return;   	
   
   function initTableFilter() {
 	const old = document.getElementById(FILTER_ID);
