@@ -3094,7 +3094,7 @@
             if (!ObsidianSite.getWebpageData(t)) return new K("This page does not exist yet."), void console.warn("Page does not exist", t);
             const n = await new J(t).load();
             if (!n) return void new K("Failed to load page. Unknown error.");
-			// -----------------
+			//------------------
 			document.querySelectorAll("[data-spa-reload]").forEach(e=>e.remove());
 
 			n.sourceHtml.querySelectorAll("link[rel='stylesheet'],style,script").forEach(e=>{
@@ -3112,7 +3112,7 @@
 
 			  document.head.appendChild(r);
 			});
-			// -----------------
+			//------------------
             if (document.title = n.title, this.updateMetaTag("pathname", n.pathname), this.updateMetaTag("description", n.info?.description || ""), this.updateMetaTag("author", n.info?.author || ""), this.updateMetaTag("og:title", n.title), this.updateMetaTag("og:description", n.info?.description || ""), this.updateMetaTag("og:url", window.location.href), this.updateMetaTag("og:image", n.info?.coverImageURL || ""), await (this.graphView?.showGraph([n.pathname])), this.fileTree?.findByPath(n.pathname)?.setActive(), this.fileTree?.revealPath(n.pathname), this.graphView?.setActiveNodeByPath(n.pathname), this.document = n, this.document && this.isHttp && e) {
                 let t = this.document.pathname;
                 "index.html" == t && (t = ""), history.pushState({
