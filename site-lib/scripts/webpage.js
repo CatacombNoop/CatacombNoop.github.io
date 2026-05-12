@@ -3098,13 +3098,18 @@
 			document.querySelectorAll("[data-spa-reload]").forEach(e=>e.remove());
 
 			n.sourceHtml.querySelectorAll("link[rel='stylesheet'],style,script").forEach(e=>{
-			  if(e.src && /webpage|app/i.test(e.src)) return;
+			  if(e.src && /webpage\.js/i.test(e.src)) return;
 
 			  const r=document.createElement(e.tagName.toLowerCase());
 			  [...e.attributes].forEach(a=>r.setAttribute(a.name,a.value));
 			  r.setAttribute("data-spa-reload","");
-			  if(e.tagName==="SCRIPT") r.text=e.textContent;
-			  else r.innerHTML=e.innerHTML;
+
+			  if(e.tagName==="SCRIPT"){
+				r.textContent=e.textContent;
+			  }else{
+				r.innerHTML=e.innerHTML;
+			  }
+
 			  document.head.appendChild(r);
 			});
 			// -----------------
