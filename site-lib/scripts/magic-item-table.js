@@ -355,7 +355,7 @@
   // ===================================================
   //  Инициализация при разных сценариях загрузки
   // ===================================================
-
+	/*
   // 1. Первоначальная загрузка
   if (document.readyState === "loading") {
 	document.addEventListener("DOMContentLoaded", initTableFilter);
@@ -383,6 +383,6 @@
 	  observerTimer = setTimeout(initTableFilter, 200);
 	}
   });
-  observer.observe(document.body, { childList: true, subtree: true });
+  observer.observe(document.body, { childList: true, subtree: true });*/
 
 })();
