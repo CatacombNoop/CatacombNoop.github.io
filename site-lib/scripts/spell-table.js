@@ -88,7 +88,7 @@
       const values = getSpecialSpanValues(row, colIndex);
       if (filterType === "ritual") {
         // Для ритуала: возвращаем специальное значение если ритуала нет
-        return values.length > 0 ? values[0] : "(Без ритуала)";
+        return values.length > 0 ? values[0] : "(Не Ритуал)";
       }
       return values.length > 0 ? values[0] : cellText(row, colIndex);
     }
@@ -291,7 +291,7 @@
     const selTime = makeSelect("— Время —", timeOptions);
     const selConc = makeSelect("— Концентрация —", getUnique(COL_CONCENTRATION));
     // Новые фильтры для колонок со special spans
-    const selRitual = makeSelect("— Ритуал —", ["(Без ритуала)", ...getUnique(COL_RITUAL, true)]);
+    const selRitual = makeSelect("— Ритуал —", ["(Не Ритуал)", ...getUnique(COL_RITUAL, true)]);
     const selSpecial = makeSelect("— Особое —", getUnique(COL_SPECIAL, true));
     const selSource = makeSelect("— Сборник —", getUnique(COL_SOURCE, true));
 
@@ -360,9 +360,9 @@
         const rowSpecial = getSpecialSpanValues(row, COL_SPECIAL);
         const rowSource = getSpecialSpanValues(row, COL_SOURCE);
         
-        // Проверка для фильтра "Без ритуала"
+        // Проверка для фильтра "Не Ритуал"
         const hasRitual = rowRitual.length > 0;
-        const ritualFilterOk = !ritual || (ritual === "(Без ритуала)" ? !hasRitual : rowRitual.includes(ritual));
+        const ritualFilterOk = !ritual || (ritual === "(Не Ритуал)" ? !hasRitual : rowRitual.includes(ritual));
 
         const ok =
           (!q || name.includes(q)) &&
