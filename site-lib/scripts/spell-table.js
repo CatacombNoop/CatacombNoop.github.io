@@ -42,28 +42,49 @@
       "Особое": 6
     };
 
+    // Классы span, которые нужно учитывать как отдельные значения
+    const SPECIAL_SPAN_CLASSES = ["school-text-box", "school2-text-box", "ritual-text-box"];
+
     function cellText(row, i) {
       return (row.querySelectorAll("td")[i]?.textContent || "").trim();
     }
 
-    // Новая функция: получение всех значений из вложенных <span> для указанного столбца
-    function getSpanValues(row, colIndex) {
+    // Новая функция: получение значений из span с определёнными классами
+    // Для колонок Особое и Сборник - ищем все span с классами school-text-box, school2-text-box, ritual-text-box
+    function getSpecialSpanValues(row, colIndex) {
       const cell = row.querySelectorAll("td")[colIndex];
       if (!cell) return [];
       
-      const spans = cell.querySelectorAll(":scope > span");
-      if (spans.length === 0) {
-        // Если нет прямых дочерних span, пробуем получить все span внутри
-        const allSpans = cell.querySelectorAll("span");
-        return Array.from(allSpans).map(s => s.textContent.trim()).filter(Boolean);
+      const values = [];
+      
+      // Ищем все span с нужными классами
+      SPECIAL_SPAN_CLASSES.forEach(cls => {
+        const spans = cell.querySelectorAll(`span.${cls}`);
+        spans.forEach(span => {
+          const text = span.textContent.trim();
+          if (text) {
+            values.push(text);
+          }
+        });
+      });
+      
+      // Если не найдены специальные классы, пробуем получить все span напрямую
+      if (values.length === 0) {
+        const allSpans = cell.querySelectorAll(":scope > span");
+        allSpans.forEach(span => {
+          const text = span.textContent.trim();
+          if (text) {
+            values.push(text);
+          }
+        });
       }
       
-      return Array.from(spans).map(s => s.textContent.trim()).filter(Boolean);
+      return values;
     }
 
-    // Получение первого значения из span (для отображения в фильтрах)
-    function firstSpanValue(row, colIndex) {
-      const values = getSpanValues(row, colIndex);
+    // Получение первого значения из специальных span (для сортировки)
+    function firstSpecialSpanValue(row, colIndex) {
+      const values = getSpecialSpanValues(row, colIndex);
       return values.length > 0 ? values[0] : cellText(row, colIndex);
     }
 
@@ -97,12 +118,14 @@
         .filter(Boolean);
     }
 
-    function getUnique(colIndex, useSpanValues = false, splitter = null) {
+    // Получение уникальных значений для столбца
+    // useSpecialSpans = true для COL_SPECIAL и COL_SOURCE
+    function getUnique(colIndex, useSpecialSpans = false, splitter = null) {
       const set = new Set();
       rows.forEach(row => {
-        if (useSpanValues) {
-          // Для колонок Особое и Сборник - получаем все значения из span
-          const spanValues = getSpanValues(row, colIndex);
+        if (useSpecialSpans) {
+          // Для колонок Особое и Сборник - получаем все значения из специальных span
+          const spanValues = getSpecialSpanValues(row, colIndex);
           spanValues.forEach(v => {
             if (v && v !== "-") set.add(v);
           });
@@ -118,17 +141,6 @@
         }
       });
       return [...set].sort((a, b) => a.localeCompare(b, "ru", { sensitivity: "base", numeric: true }));
-    }
-
-    // Функция сравнения для сортировки с учетом span значений
-    function compareCellValues(valA, valB, colIndex, useSpanValues) {
-      if (useSpanValues) {
-        // Для столбцов с span - сравниваем по первому значению
-        const spanA = getSpanValues(rows.find(r => cellText(r, colIndex) === valA), colIndex);
-        const spanB = getSpanValues(rows.find(r => cellText(r, colIndex) === valB), colIndex);
-        return (spanA[0] || valA).localeCompare(spanB[0] || valB, "ru", { sensitivity: "base", numeric: true });
-      }
-      return valA.localeCompare(valB, "ru", { sensitivity: "base", numeric: true });
     }
 
     function sortTable(colIndex) {
@@ -148,17 +160,16 @@
       if (sortDir === 0) {
         sorted = originalOrder.slice();
       } else {
+        // Определяем, нужно ли использовать специальные span для этого столбца
+        const useSpecialSpans = (colIndex === COL_SPECIAL || colIndex === COL_SOURCE);
+        
         sorted = rows.slice().sort((a, b) => {
           let valA, valB;
           
-          // Для столбцов Особое и Сборник используем значения из span
-          const useSpanValues = (colIndex === COL_SPECIAL || colIndex === COL_SOURCE);
-          
-          if (useSpanValues) {
-            const spansA = getSpanValues(a, colIndex);
-            const spansB = getSpanValues(b, colIndex);
-            valA = spansA.length > 0 ? spansA[0] : cellText(a, colIndex);
-            valB = spansB.length > 0 ? spansB[0] : cellText(b, colIndex);
+          if (useSpecialSpans) {
+            // Для столбцов Особое и Сборник используем значения из special span
+            valA = firstSpecialSpanValue(a, colIndex);
+            valB = firstSpecialSpanValue(b, colIndex);
           } else {
             valA = cellText(a, colIndex);
             valB = cellText(b, colIndex);
@@ -171,9 +182,6 @@
           } else if (colIndex === COL_TIME) {
             cmp = timeSortRank(valA) - timeSortRank(valB);
             if (!cmp) cmp = valA.localeCompare(valB, "ru", { sensitivity: "base", numeric: true });
-          } else if (colIndex === COL_SPECIAL || colIndex === COL_SOURCE) {
-            // Сортировка по первому значению из span
-            cmp = valA.localeCompare(valB, "ru", { sensitivity: "base", numeric: true });
           } else {
             cmp = valA.localeCompare(valB, "ru", { sensitivity: "base", numeric: true });
           }
@@ -274,7 +282,7 @@
     search.placeholder = "🔍 Заклинание…";
     search.style.cssText = inputCSS + "flex:1 1 180px;min-width:160px;";
 
-    // Для Особое и Сборника используем getUnique с useSpanValues = true
+    // Для Особое и Сборника используем getUnique с useSpecialSpans = true
     const selLevel = makeSelect("— Уровень —", getUnique(COL_LEVEL));
     const selSchool = makeSelect("— Школа —", getUnique(COL_SCHOOL));
     const selTime = makeSelect("— Время —", timeOptions);
@@ -340,9 +348,9 @@
         const rowComps = getComponents(cellText(row, COL_COMPONENTS));
         const rowConc = cellText(row, COL_CONCENTRATION);
         
-        // Получаем все значения из span для Особое и Сборника
-        const rowSpecial = getSpanValues(row, COL_SPECIAL);
-        const rowSource = getSpanValues(row, COL_SOURCE);
+        // Получаем все значения из special span для Особое и Сборника
+        const rowSpecial = getSpecialSpanValues(row, COL_SPECIAL);
+        const rowSource = getSpecialSpanValues(row, COL_SOURCE);
 
         const ok =
           (!q || name.includes(q)) &&
@@ -350,6 +358,7 @@
           (!school || rowSchool === school) &&
           (!time || rowTime.includes(time)) &&
           (!conc || rowConc === conc) &&
+          // Фильтрация: показываем строку если выбранное значение содержится в любом из special span
           (!special || rowSpecial.includes(special)) &&
           (!source || rowSource.includes(source)) &&
           neededComps.every(c => rowComps.includes(c));
