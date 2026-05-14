@@ -573,7 +573,15 @@
 
     // Мультиселекты для Тип и Редкость
     const mSelType = makeMultiSelect("— Тип —", getUnique(COL_TYPE), apply);
-    const mSelRarity = makeMultiSelect("— Редкость —", getUnique(COL_RARITY), apply);
+    const mSelRarity = makeMultiSelect("— Редкость —", [
+      "Нет",
+	  "Обычный",
+	  "Необычный",
+	  "Редкий",
+	  "Очень Редкий",
+	  "Легендарный",
+	  "Артефакт",
+	  "Варьируется"], apply);
 
     // Обычный select для Настройка
     const selTune = makeSelect("— Настройка —", getUnique(COL_TUNE));
