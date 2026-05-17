@@ -331,13 +331,15 @@
       }
     }
 
+    // Обновлённая функция
     function firstSpecialSpanValue(row, colIndex, filterType = null) {
       const values = getSpecialSpanValues(row, colIndex);
-
       if (filterType === "ritual") {
         return values.length > 0 ? values[0] : "(Не Ритуал)";
       }
-
+      if (filterType === "special") {
+        return values.length > 0 ? values[0] : "(Не Особое)";
+      }
       return values.length > 0 ? values[0] : cellText(row, colIndex);
     }
 
@@ -429,7 +431,7 @@
           colIndex === COL_SPECIAL ||
           colIndex === COL_SOURCE;
 
-        const filterType = colIndex === COL_RITUAL ? "ritual" : null;
+        const filterType = colIndex === COL_RITUAL ? "ritual" : colIndex === COL_SPECIAL ? "special" : null;
 
         sorted = rows.slice().sort((a, b) => {
           let valA;
@@ -782,7 +784,10 @@
     const mSelLevel = makeMultiSelect("— Уровень —", getUnique(COL_LEVEL), apply);
     const mSelSchool = makeMultiSelect("— Школа —", getUnique(COL_SCHOOL), apply);
     const mSelTime = makeMultiSelect("— Время —", timeOptions, apply);
-    const mSelSpecial = makeMultiSelect("— Особое —", getUnique(COL_SPECIAL, true), apply);
+    const mSelSpecial = makeMultiSelect("— Особое —", [
+      "(Не Особое)",
+      ...getUnique(COL_SPECIAL, true)
+    ], apply);
     const mSelSource = makeMultiSelect("— Сборник —", getUnique(COL_SOURCE, true), apply);
 
     const selConc = makeSelect("— Концентрация —", getUnique(COL_CONCENTRATION));
@@ -882,6 +887,7 @@
         const rowSource = getSpecialSpanValues(row, COL_SOURCE);
 
         const hasRitual = rowRitual.length > 0;
+        const hasSpecial = rowSpecial.length > 0;
 
         const ritualFilterOk =
           !ritual ||
@@ -891,6 +897,14 @@
               : rowRitual.includes(ritual)
           );
 
+        // Новая проверка для "Особое"
+        const specialFilterOk =
+          !specials.length ||
+          (specials.includes("(Не Особое)")
+            ? !hasSpecial
+            : specials.some(s => rowSpecial.includes(s))
+          );
+
         const ok =
           (!q || name.includes(q)) &&
           (!levels.length || levels.includes(rowLevel)) &&
@@ -898,7 +912,7 @@
           (!times.length || times.some(t => rowTime.includes(t))) &&
           (!conc || rowConc === conc) &&
           ritualFilterOk &&
-          (!specials.length || specials.some(s => rowSpecial.includes(s))) &&
+          specialFilterOk &&
           (!sources.length || sources.some(s => rowSource.includes(s))) &&
           neededComps.every(c => rowComps.includes(c)) &&
           (!hideEmptySpecial || rowSpecial.length > 0);
